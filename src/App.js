@@ -10,21 +10,9 @@ import {
 import Home from "./pages/Home";
 import CreatePost from "./pages/CreatePost";
 import Login from "./pages/Login";
-import {signOut} from "firebase/auth";
-import { useNavigate } from 'react-router-dom';
-import {auth} from "./firebase-config";
 
 function App() {
   const [isAuth,setIsAuth] = useState(false);
-
-  let navigate = useNavigate()
-  const signUserOut = () => {
-    signOut(auth).then(()=>{
-      localStorage.clear()
-      setIsAuth(false)
-      navigate("/login")
-    })
-  };
   return (
     <Router>
       <nav>
@@ -35,10 +23,9 @@ function App() {
           CreatePost
         </Link>
         {
-          !isAuth ? <Link to="/login">
+          !isAuth && <Link to="/login">
             Login
-          </Link> : 
-          <button onClick={signUserOut} > Log Out </button>
+          </Link> 
         }
       </nav>
       <Routes>

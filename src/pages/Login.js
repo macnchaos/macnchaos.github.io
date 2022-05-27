@@ -13,7 +13,7 @@ const Login = ({setIsAuth}) => {
     })
   };
   return (
-    <div class="loginPage">
+    <div className="loginPage">
       <p>
         SignIn with Google to continue
       </p>
