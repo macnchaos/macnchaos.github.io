@@ -7,7 +7,7 @@ const Home = ({isAuth}) => {
   const deleteArticle = useCallback(async (id) => {
     const articleDoc = doc(db, "articles", id);
     await deleteDoc(articleDoc);
-    console.log("inside deleteArticle")
+    console.log("inside deleteArticle useCallback")
     setUpdateArticleList(true);
   },[]);
 
@@ -22,7 +22,7 @@ const Home = ({isAuth}) => {
       const data = await getDocs(articleCollectionRef);
       setArticleList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
-    console.log("here");
+    console.log("inside home render useEffect");
     
     getArticles();
   }, [updateArticleList]);
@@ -54,7 +54,7 @@ const Home = ({isAuth}) => {
               </div>
             </div>
             <div className="postTextContainer">{article.postText}</div>
-            <h3>{article.author.name}</h3>
+            <h3>@{article.author.name}</h3>
           </div>
         );
       })}
