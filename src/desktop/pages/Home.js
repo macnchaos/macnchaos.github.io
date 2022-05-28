@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { db,auth } from "../firebase-config";
+import { db,auth } from '../../firebase-config.js';
 const Home = ({isAuth}) => {
   const [articleList, setArticleList] = useState([]);
   const [updateArticleList,setUpdateArticleList] = useState(true);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {addDoc, collection} from "firebase/firestore";
-import { auth, db } from '../firebase-config';
+import { auth, db } from '../../firebase-config.js';
 import { useNavigate } from 'react-router-dom';
 
 const CreatePost = ({ isAuth }) => {
