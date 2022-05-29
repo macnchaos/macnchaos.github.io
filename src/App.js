@@ -9,6 +9,9 @@ function App() {
     query: "(min-device-width: 1024px)",
   });
   return (
+    // <div>
+    //   {<MobileApp/>}
+    // </div>
     <div>
       {isDesktop?<DesktopApp/>:<MobileApp/>}
     </div>

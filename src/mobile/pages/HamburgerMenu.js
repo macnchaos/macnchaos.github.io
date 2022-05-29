@@ -43,7 +43,7 @@ const Icon = styled.span`
   width: 3rem;
   height: 3px;
   display: inline-block;
-  margin-top: 2rem;
+  margin-top: 2rem; //icon margin
   transition: all 0.3s;
   &::before,
   &::after {
@@ -133,8 +133,8 @@ function HamburgerMenu() {
             </ItemLink>
           </li>
           <li>
-            <ItemLink onClick={handleClick} to="/login">
-              Login
+            <ItemLink onClick={handleClick} to="/posts">
+              Posts
             </ItemLink>
           </li>
         </List>
