@@ -32,15 +32,15 @@ const Home = ({isAuth}) => {
   
 
   return (
-    <div className="homePage">
+    <div className="mobileHomePage">
       {articleList.map((article) => {
         return (
-          <div className="post">
-            <div className="postHeader">
-              <div className="title">
+          <div className="mobilePost">
+            <div className="mobilePostHeader">
+              <div className="mobileTitle">
                 <h1>{article.title}</h1>
               </div>
-              <div className="deletePost">
+              <div className="mobileDeletePost">
                 {isAuth && article.author.id === auth.currentUser.uid && (
                   <button
                     onClick={() => {
@@ -53,7 +53,7 @@ const Home = ({isAuth}) => {
                 )}
               </div>
             </div>
-            <div className="postTextContainer">{article.postText}</div>
+            <div className="mobilePostTextContainer">{article.postText}</div>
             <h3>@{article.author.name}</h3>
           </div>
         );
