@@ -31,7 +31,7 @@ function DesktopApp() {
         <Link to="/">
           Home
         </Link>
-        <Link to="/Posts">
+        <Link to="/posts">
           Posts
         </Link>
         {
@@ -48,7 +48,7 @@ function DesktopApp() {
       </nav>
       <Routes>
         <Route path = "/" element={<Home isAuth={isAuth}/>} />
-        <Route path = "/Posts" element={<Posts isAuth={isAuth}/>} />
+        <Route path = "/posts" element={<Posts isAuth={isAuth}/>} />
         <Route path = "/createpost" element={<CreatePost isAuth={isAuth}/>} />
         <Route path = "/login" element={<Login setIsAuth={setIsAuth}/>} />
       </Routes>
