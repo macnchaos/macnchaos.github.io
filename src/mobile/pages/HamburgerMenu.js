@@ -13,8 +13,8 @@ const MenuLabel = styled.label`
   top: 1rem;
   right: 1rem;
   border-radius: 50%;
-  height: 7rem;
-  width: 7rem;
+  height: 4rem;
+  width: 4rem;
   cursor: pointer;
   z-index: 1000;
   box-shadow: 0 1rem 3rem rgba(182, 237, 200, 0.3);
@@ -41,9 +41,9 @@ const Icon = styled.span`
   position: relative;
   background-color: ${(props) => (props.clicked ? "transparent" : "black")};
   width: 3rem;
-  height: 2px;
+  height: 3px;
   display: inline-block;
-  margin-top: 3.5rem;
+  margin-top: 2rem;
   transition: all 0.3s;
   &::before,
   &::after {
