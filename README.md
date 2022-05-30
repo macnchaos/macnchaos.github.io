@@ -29,6 +29,10 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+### npm run deploy
+
+This will deploy the application to github pages, if homepage at package.json is pointed to the deployment repository. Also, make sure not to forget adding package>>scripts>>predeploy&deploy
+
 ### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can't go back!**
