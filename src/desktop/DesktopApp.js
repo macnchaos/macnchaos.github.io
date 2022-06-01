@@ -42,7 +42,8 @@ function DesktopApp() {
             <Link to="/createpost">
               Create
             </Link>
-            <button onClick={signUserOut}> Log Out </button>
+            
+            <button className="button-logout" onClick={signUserOut}> LogOut </button>
           </>
         }
       </nav>

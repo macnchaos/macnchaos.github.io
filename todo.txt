@@ -1,0 +1,12 @@
+ - incremental datafetch along with scrolling or more button <- speedup website
+ - Multimedia posting <- feature addition
+ - ✅ Google Signin issue in mobile and github.io <- bug/feature addition
+    : the redirect link issue, firebase allows only localhost and it's provided
+      link as allowed redirects for oauth. Can setup personal domain too, but not 
+      github.io or heroku.com
+ - Comments
+ - Likes
+
+
+ Logic - Signin >> Multimedia posting >> incremental datafetch
+ Login failing in github and heroku because their redirect uri are not registered with Google
