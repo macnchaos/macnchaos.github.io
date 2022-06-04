@@ -1,7 +1,8 @@
+import { signOut } from "firebase/auth";
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-
+import { auth } from "../../firebase-config";
 const COLORS = {
   primaryDark: "#115b4c",
   primaryLight: "#B6EDC8",
@@ -114,10 +115,16 @@ const ItemLink = styled(NavLink)`
     transform: translateX(1rem);
   }
 `;
-
-function HamburgerMenu() {
+function HamburgerMenu({isAuth,setIsAuth}) {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
+  const signUserOut = ()=>{
+    signOut(auth).then(()=>{
+      localStorage.clear()
+      setIsAuth(false)
+      window.location.pathname = "/login"
+    })
+  }
   return (
     <>
       <MenuLabel htmlFor="navi-toggle" onClick={handleClick}>
@@ -137,6 +144,22 @@ function HamburgerMenu() {
               Posts
             </ItemLink>
           </li>
+          {
+            !isAuth ? <li>
+              <ItemLink onClick={handleClick} to="/login">
+                Login
+              </ItemLink>
+            </li> : 
+            <>
+              <li>
+                <ItemLink onClick={handleClick} to="/createPost">
+                  Create
+                </ItemLink>
+              </li>
+              
+              <button className="mobile-button-logout" align="right" onClick={signUserOut}> LogOut </button>
+            </>
+          }
         </List>
       </Navigation>
     </>

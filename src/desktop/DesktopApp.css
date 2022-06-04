@@ -190,20 +190,53 @@ textarea {
 
 /* CSS for Logout button*/
 .button-logout {
+  position:fixed;
+  right:10px;
+  top:5px;
+  align-items: normal;
+  background-color: transparent;
+  font-family: Arial, Helvetica, sans-serif;
+  border-style: none;
+  box-sizing: content-box;
+  color: white; 
+  cursor: pointer;
+  display: inline;
+  font-size: 20px;
+  height: auto;
+  padding: 0;
+  perspective-origin: 0 0;
+  text-align: start;
+  text-decoration: none;
+  transform-origin: 0 0;
+  width: auto;
+  -moz-appearance: none;
+  -webkit-logical-height: 1em; /* Chrome ignores auto, so we have to use this hack to set the correct height  */
+  -webkit-logical-width: auto; /* Chrome ignores auto, but here for completeness */
+}
+
+/* CSS google Logout button*/
+.desktop-button-logout {
   align-items: center;
   appearance: none;
-  background-color: transparent;
-  border-radius: 0px;
+  background-color: #fff;
+  border-radius: 24px;
   border-style: none;
-  font-size: 24px;
-  color: white;
+  box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+  box-sizing: border-box;
+  color: #3c4043;
   cursor: pointer;
   display: inline-flex;
   fill: currentcolor;
-  font-family: Arial, Helvetica, sans-serif;;
+  font-family: "Google Sans",Roboto,Arial,sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 48px;
+  justify-content: center;
+  letter-spacing: .25px;
   line-height: normal;
   max-width: 100%;
-  overflow: hidden;
+  overflow: visible;
+  padding: 2px 24px;
   position: relative;
   text-align: center;
   text-transform: none;
@@ -214,4 +247,39 @@ textarea {
   width: auto;
   will-change: transform,opacity;
   z-index: 0;
+}
+
+.desktop-button-logout:hover {
+  background: #F6F9FE;
+  color: #174ea6;
+}
+
+.desktop-button-logout:active {
+  box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
+  outline: none;
+}
+
+.desktop-button-logout:focus {
+  outline: none;
+  border: 2px solid #4285f4;
+}
+
+.desktop-button-logout:not(:disabled) {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+.desktop-button-logout:not(:disabled):hover {
+  box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
+}
+
+.desktop-button-logout:not(:disabled):focus {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+.desktop-button-logout:not(:disabled):active {
+  box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
+}
+
+.desktop-button-logout:disabled {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
 }

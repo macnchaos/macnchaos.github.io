@@ -15,12 +15,11 @@ import Login from "./pages/Login";
 
 function MobileApp() {
   const [isAuth,setIsAuth] = useState(false);
-  
   return (
     <Router>
-      <HamburgerMenu isAuth={isAuth}/>
+      <HamburgerMenu isAuth={isAuth} setIsAuth={setIsAuth}/>
       <Routes>
-        <Route path = "/" element={<Home isAuth={isAuth} setIsAuth={setIsAuth}/>} />
+        <Route path = "/" element={<Home />} />
         <Route path = "/posts" element={<Posts isAuth={isAuth}/>} />
         <Route path = "/createpost" element={<CreatePost isAuth={isAuth}/>} />
         <Route path = "/login" element={<Login setIsAuth={setIsAuth}/>} />

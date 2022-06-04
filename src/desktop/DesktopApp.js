@@ -43,7 +43,7 @@ function DesktopApp() {
               Create
             </Link>
             
-            <button className="button-logout" onClick={signUserOut}> LogOut </button>
+            <button align="right" className="desktop-button-logout" onClick={signUserOut}> LogOut </button>
           </>
         }
       </nav>
