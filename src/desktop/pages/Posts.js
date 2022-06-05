@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { db,auth } from '../../firebase-config.js';
+import Tweet from "../posts/Tweet.js";
+import Pimage from "../posts/Pimage.js"
+import Pvideo from "../posts/Pvideo.js";
 const Posts = ({isAuth}) => {
     const [postList, setPostList] = useState([]);
     const [updatePostList,setUpdatePostList] = useState(true);
@@ -35,7 +38,7 @@ const Posts = ({isAuth}) => {
       <div className="homePage">
         {postList.map((post) => {
           return (
-            <div className="post">
+            <div className="post">  
               <div className="postHeader">
                 <div className="title">
                   <h1>{post.title}</h1>
@@ -53,10 +56,18 @@ const Posts = ({isAuth}) => {
                   )}
                 </div>
               </div>
-              <div className="postTextContainer">{post.postText}</div>
-              <h3>@{post.author.name}</h3>
-            </div>
-          );
+            {
+              post.postType === "macTweet" ?
+                <Tweet content = {post.content}/>:
+              post.postType === "macImage" ?
+                <Pimage content = {post.content}/>:
+              post.postType === "macVideo" ?
+                <Pvideo content = {post.content}/>:
+              <></>
+            }
+            <h3>@{post.author.name}</h3>
+          </div>
+          )
         })}
       </div>
     );

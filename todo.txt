@@ -6,7 +6,23 @@
       github.io or heroku.com
  - Comments
  - Likes
+ - loading screen
 
 
  Logic - Signin >> Multimedia posting >> incremental datafetch
  Login failing in github and heroku because their redirect uri are not registered with Google
+
+Definition of post? - Article, Video, Photo, pdf!
+pdf -> popup
+post schema {
+  author:{
+    id:,
+    name:
+  },
+  title:,
+  postType:macTweet,Image,Video,Article
+  content:{
+    
+  }
+}
+https://www.npmjs.com/package/react-pdf
