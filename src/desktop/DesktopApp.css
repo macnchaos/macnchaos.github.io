@@ -154,6 +154,8 @@ textarea {
   margin: 20px;
   padding: 20px;
   border-radius: 15px;
+  overflow: hidden;
+  overflow-y: auto;
 }
 
 .post .postHeader {
@@ -180,7 +182,7 @@ textarea {
   cursor: pointer;
 }
 
-.post .postTextContainer {
+.postTextContainer {
   word-wrap: break-word;
   height: auto;
   max-height: 400px;
@@ -188,11 +190,15 @@ textarea {
   overflow: hidden;
   overflow-y: auto;
 }
-.post .postImageContainer {
-  width:100%;
+.image-wrapper {
+  display: flex;
+  justify-content: center;
+}
+.postImageContainer {
+  width:auto;
   height: auto;
   max-height: 400px;
-  width: 100%;
+  position:relative;
   overflow: hidden;
   overflow-y: auto;
 }

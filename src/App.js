@@ -10,11 +10,8 @@ function App() {
   });
   return (
     <div>
-      {<MobileApp/>}
+      {isDesktop?<DesktopApp/>:<MobileApp/>}
     </div>
-    // <div>
-    //   {isDesktop?<DesktopApp/>:<MobileApp/>}
-    // </div>
   );
 }
 

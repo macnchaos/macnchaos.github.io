@@ -1,65 +1,76 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { db,auth } from '../../firebase-config.js';
+import Tweet from "../posts/Tweet.js";
+import Pimage from "../posts/Pimage.js"
+import Pvideo from "../posts/Pvideo.js";
 const Home = ({isAuth}) => {
-  const [articleList, setArticleList] = useState([]);
-  const [updateArticleList,setUpdateArticleList] = useState(true);
-  const deleteArticle = useCallback(async (id) => {
-    const articleDoc = doc(db, "articles", id);
-    await deleteDoc(articleDoc);
-    console.log("inside deleteArticle useCallback")
-    setUpdateArticleList(true);
-  },[]);
-
-  useEffect(() => {
-    if (!updateArticleList){
-      return;
-    }
-    setUpdateArticleList(false)
-    const articleCollectionRef = collection(db, "articles");
-    const getArticles = async () => {
-      //creating a new function because we need to do this asynchronously
-      const data = await getDocs(articleCollectionRef);
-      setArticleList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    console.log("inside home render useEffect");
-    
-    getArticles();
-  }, [updateArticleList]);
-  //empty dependency => [] means call function only on first mount(may be on end also until app not in production)
-  //https://blog.logrocket.com/solve-react-useeffect-hook-infinite-loop-patterns/
- 
+    const [postList, setPostList] = useState([]);
+    const [updatePostList,setUpdatePostList] = useState(true);
+    const deletePost = useCallback(async (id) => {
+      const postDoc = doc(db, "posts", id);
+      await deleteDoc(postDoc);
+      console.log("inside deletePost useCallback")
+      setUpdatePostList(true);
+    },[]);
   
-
-  return (
-    <div className="homePage">
-      {articleList.map((article) => {
-        return (
-          <div className="post">
-            <div className="postHeader">
-              <div className="title">
-                <h1>{article.title}</h1>
+    useEffect(() => {
+      if (!updatePostList){
+        return;
+      }
+      setUpdatePostList(false)
+      const postCollectionRef = collection(db, "posts");
+      const getPosts = async () => {
+        //creating a new function because we need to do this asynchronously
+        const data = await getDocs(postCollectionRef);
+        setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      };
+      console.log("inside Post render useEffect");
+      
+      getPosts();
+    }, [updatePostList]);
+    //empty dependency => [] means call function only on first mount(may be on end also until app not in production)
+    //https://blog.logrocket.com/solve-react-useeffect-hook-infinite-loop-patterns/
+   
+    
+  
+    return (
+      <div className="homePage">
+        {postList.map((post) => {
+          return (
+            <div className="post">  
+              <div className="postHeader">
+                <div className="title">
+                  <h1>{post.title}</h1>
+                </div>
+                <div className="deletePost">
+                  {isAuth && post.author.id === auth.currentUser.uid && (
+                    <button
+                      onClick={() => {
+                        deletePost(post.id);
+                      }}
+                    >
+                      {" "}
+                      &#128465;
+                    </button>
+                  )}
+                </div>
               </div>
-              <div className="deletePost">
-                {isAuth && article.author.id === auth.currentUser.uid && (
-                  <button
-                    onClick={() => {
-                      deleteArticle(article.id);
-                    }}
-                  >
-                    {" "}
-                    &#128465;
-                  </button>
-                )}
-              </div>
-            </div>
-            <div className="postTextContainer">{article.postText}</div>
-            <h3>@{article.author.name}</h3>
+            {
+              post.postType === "macTweet" ?
+                <Tweet content = {post.content}/>:
+              post.postType === "macImage" ?
+                <Pimage content = {post.content}/>:
+              post.postType === "macVideo" ?
+                <Pvideo content = {post.content}/>:
+              <></>
+            }
+            <h3>@{post.author.name}</h3>
           </div>
-        );
-      })}
-    </div>
-  );
+          )
+        })}
+      </div>
+    );
 };
 
 export default Home;
