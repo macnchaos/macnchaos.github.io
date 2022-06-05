@@ -1,5 +1,8 @@
+ - ✅ Video, Image in Desktop View
+ - Video, Image in mobile View
+ - Video, Image in create View
  - incremental datafetch along with scrolling or more button <- speedup website
- - Multimedia posting <- feature addition
+ - timestamp
  - ✅ Google Signin issue in mobile and github.io <- bug/feature addition
     : the redirect link issue, firebase allows only localhost and it's provided
       link as allowed redirects for oauth. Can setup personal domain too, but not 
@@ -7,6 +10,9 @@
  - Comments
  - Likes
  - loading screen
+ - PDF popup viewer in desktop viewer
+ - PDF popup viewer in mobile viewer
+ - PDF input from create page
 
 
  Logic - Signin >> Multimedia posting >> incremental datafetch

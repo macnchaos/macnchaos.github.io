@@ -6,15 +6,15 @@ import { useMediaQuery } from 'react-responsive'
 function App() {
 
   const isDesktop = useMediaQuery({
-    query: "(min-device-width: 1024px)",
+    query: "(min-device-width: 850px)",
   });
   return (
-    // <div>
-    //   {<MobileApp/>}
-    // </div>
     <div>
-      {isDesktop?<DesktopApp/>:<MobileApp/>}
+      {<MobileApp/>}
     </div>
+    // <div>
+    //   {isDesktop?<DesktopApp/>:<MobileApp/>}
+    // </div>
   );
 }
 
