@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 
 import Home from "./pages/Home";
-import Posts from "./pages/Posts";
 import CreatePost from "./pages/CreatePost";
 import Login from "./pages/Login";
 import {signOut} from "firebase/auth";
@@ -31,9 +30,6 @@ function DesktopApp() {
         <Link to="/">
           Home
         </Link>
-        <Link to="/posts">
-          Posts
-        </Link>
         {
           !isAuth ? <Link to="/login">
             Login
@@ -49,7 +45,6 @@ function DesktopApp() {
       </nav>
       <Routes>
         <Route path = "/" element={<Home isAuth={isAuth}/>} />
-        <Route path = "/posts" element={<Posts isAuth={isAuth}/>} />
         <Route path = "/createpost" element={<CreatePost isAuth={isAuth}/>} />
         <Route path = "/login" element={<Login setIsAuth={setIsAuth}/>} />
       </Routes>

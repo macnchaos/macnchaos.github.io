@@ -38,7 +38,7 @@ const Home = ({isAuth}) => {
       <div className="homePage">
         {postList.map((post) => {
           return (
-            <div className="post">  
+            <div className="post">
               <div className="postHeader">
                 <div className="title">
                   <h1>{post.title}</h1>

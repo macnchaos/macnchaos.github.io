@@ -1,7 +1,7 @@
 import DesktopApp from "./desktop/DesktopApp";
 import MobileApp from "./mobile/MobileApp";
 import { useMediaQuery } from 'react-responsive'
-
+import "./App.css";
 
 function App() {
 
@@ -9,7 +9,7 @@ function App() {
     query: "(min-device-width: 850px)",
   });
   return (
-    <div>
+    <div className="desktop-parent">
       {isDesktop?<DesktopApp/>:<MobileApp/>}
     </div>
   );

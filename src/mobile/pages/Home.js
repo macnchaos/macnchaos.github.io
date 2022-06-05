@@ -43,18 +43,6 @@ const Home = ({isAuth}) => {
                 <div className="title">
                   <h1>{post.title}</h1>
                 </div>
-                <div className="mobileDeletePost">
-                  {isAuth && post.author.id === auth.currentUser.uid && (
-                    <button
-                      onClick={() => {
-                        deletePost(post.id);
-                      }}
-                    >
-                      {" "}
-                      &#128465;
-                    </button>
-                  )}
-                </div>
               </div>
             {
               post.postType === "macTweet" ?

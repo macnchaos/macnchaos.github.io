@@ -1,6 +1,7 @@
  - ✅ Video, Image in Desktop View
- - Video, Image in mobile View
- - Video, Image in create View
+ - ✅ Video, Image in mobile View
+ - ✅ Video, Image in create View
+ - delete option not appearing in mobile view - removed delete feature in mobile
  - incremental datafetch along with scrolling or more button <- speedup website
  - timestamp
  - ✅ Google Signin issue in mobile and github.io <- bug/feature addition
@@ -10,6 +11,7 @@
  - Comments
  - Likes
  - loading screen
+ - sticky nav bar for desktop
  - PDF popup viewer in desktop viewer
  - PDF popup viewer in mobile viewer
  - PDF input from create page

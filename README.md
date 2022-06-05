@@ -33,6 +33,10 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 This will deploy the application to github pages, if homepage at package.json is pointed to the deployment repository. Also, make sure not to forget adding package>>scripts>>predeploy&deploy
 
+### firebase deploy
+
+If you want to deploy your project to firebase
+
 ### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can't go back!**
