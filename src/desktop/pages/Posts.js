@@ -13,7 +13,8 @@ const Posts = ({isAuth}) => {
       name:"loading content"
     }
   });
-  const [params,setParams] = useState(useParams());
+  const params = useParams();
+  
   const deletePost = useCallback(async (id) => {
     const postDoc = doc(db, "posts", id);
     await deleteDoc(postDoc);
@@ -25,10 +26,14 @@ const Posts = ({isAuth}) => {
       const docRef = doc(db, "posts",params.id);
       const docSnap = await getDoc(docRef)
       if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
         setPost(docSnap.data());
       } else {
         // doc.data() will be undefined in this case
+        setPost({
+          author:{
+            name:"Please recheck the URL. You seem to have landed in the unknown territories of the internet"
+          }
+        })
         console.log("No such document!");
       }
     }
