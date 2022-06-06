@@ -1,7 +1,7 @@
  - ✅ Video, Image in Desktop View
  - ✅ Video, Image in mobile View
  - ✅ Video, Image in create View
- - delete option not appearing in mobile view - removed delete feature in mobile
+ - correct the login and create post page dimensions for mobile view
  - incremental datafetch along with scrolling or more button <- speedup website
  - timestamp
  - ✅ Google Signin issue in mobile and github.io <- bug/feature addition
@@ -15,7 +15,6 @@
  - PDF popup viewer in desktop viewer
  - PDF popup viewer in mobile viewer
  - PDF input from create page
-
 
  Logic - Signin >> Multimedia posting >> incremental datafetch
  Login failing in github and heroku because their redirect uri are not registered with Google

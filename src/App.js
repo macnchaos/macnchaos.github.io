@@ -10,8 +10,11 @@ function App() {
   });
   return (
     <div className="desktop-parent">
-      {isDesktop?<DesktopApp/>:<MobileApp/>}
+      {<MobileApp/>}
     </div>
+    // <div className="desktop-parent">
+    //   {isDesktop?<DesktopApp/>:<MobileApp/>}
+    // </div>
   );
 }
 

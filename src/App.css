@@ -1,3 +1,8 @@
 .desktop-parent{
-    background-image: url("../public/gifbg2.gif");
+    background-image: url("../public/gifbg6.gif");
+    background-repeat: repeat;
+    height:100vh;
+    overflow: hidden;
+    overflow-y: auto;
+    /* background-repeat: no-repeat; for gif5 */
 }

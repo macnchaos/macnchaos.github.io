@@ -14,15 +14,15 @@ a {
   font-size: 25px;
 }
 
-.createPostPage {
+.mobile-createPostPage {
   width: 100%;
   height: calc(100vh - 80px);
   display: grid;
   place-items: center;
 }
 
-.cpContainer {
-  width: 500px;
+.mobile-cpContainer {
+  width: 70%;
   height: auto;
   padding: 20px;
   background-color: black;
@@ -32,31 +32,31 @@ a {
   flex-direction: column;
 }
 
-.cpContainer h1 {
+.mobile-cpContainer h1 {
   text-align: center;
 }
 
-.cpContainer label {
+.mobile-cpContainer label {
   font-size: 25px;
 }
-.cpContainer .inputGp {
+.mobile-cpContainer .mobile-inputGp {
   margin-top: 30px;
   display: flex;
   flex-direction: column;
 }
 
-.inputGp input,
-.inputGp textarea {
+.mobile-inputGp input,
+.mobile-inputGp textarea {
   font-size: 18px;
   border: none;
   border-radius: 2px;
   padding: 5px;
 }
 
-.inputGp input {
+.mobile-inputGp input {
   height: 40px;
 }
-.inputGp textarea {
+.mobile-inputGp textarea {
   height: 150px;
 }
 
@@ -74,12 +74,12 @@ textarea {
 }
 
 .loginPage {
-  width: 100vw;
+  /* width: 100vw;
   height: calc(100vh - 80px);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 
 .loginPage p {
