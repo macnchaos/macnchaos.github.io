@@ -172,11 +172,32 @@ textarea {
   justify-content: center;
   width: 100%;
 }
+.post .postFooter {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
 
 .postHeader .title {
   flex: 50%;
 }
-.postHeader .deletePost {
+.postHeader .postExternalLink {
+  flex: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.postExternalLink button {
+  border: none;
+
+  background: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+.postFooter .author {
+  flex: 50%;
+}
+.postFooter .deletePost {
   flex: 50%;
   display: flex;
   flex-direction: column;

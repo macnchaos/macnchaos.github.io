@@ -50,7 +50,7 @@ const Posts = ({isLoggedIn}) => {
             {isLoggedIn() && post.author.id === auth.currentUser.uid && (
               <button
                 onClick={() => {
-                  deletePost(post.id);
+                  deletePost(params.id);
                 }}
               >
                 {" "}

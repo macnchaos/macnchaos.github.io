@@ -4,8 +4,11 @@
  - ✅ correct the login and create post page dimensions for mobile view
  - incremental datafetch along with scrolling or more button <- speedup website
  - timestamp or some kind of id
- - build the dynamic link that constructs page for each individual post
- - login auth not persisting for long(use caches etc)
+ - ✅ build the dynamic link that constructs page for each individual post
+ - ✅ login auth not persisting for long(use caches etc)
+ - ✅ delete button on posts page
+ - code review check for infinite reads, inefficiency etc - desktop
+ - code review check for infinite reads, inefficiency etc - mobile
  - ✅ Google Signin issue in mobile and github.io <- bug/feature addition
     : the redirect link issue, firebase allows only localhost and it's provided
       link as allowed redirects for oauth. Can setup personal domain too, but not 
@@ -35,3 +38,5 @@ post schema {
   }
 }
 https://www.npmjs.com/package/react-pdf
+
+🔗	128279	1F517

@@ -4,9 +4,15 @@ import { db } from '../../firebase-config.js';
 import Tweet from "../posts/Tweet.js";
 import Pimage from "../posts/Pimage.js"
 import Pvideo from "../posts/Pvideo.js";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
+    const navigate = useNavigate();
     const [postList, setPostList] = useState([]);
   
+    function externalRedirect(id){
+      navigate("posts/"+id)
+    }
+
     useEffect(() => {
       const postCollectionRef = collection(db, "posts");
       const getPosts = async () => {
@@ -31,6 +37,15 @@ const Home = () => {
               <div className="mobilePostHeader">
                 <div className="title">
                   <h1>{post.title}</h1>
+                </div>
+                <div className="mobilePostExternalLink" onClick={
+                  ()=>{
+                    externalRedirect(post.id)
+                  }
+                }>
+                  <button>
+                    &#128279;
+                  </button>
                 </div>
               </div>
             {

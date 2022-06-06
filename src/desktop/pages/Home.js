@@ -4,9 +4,15 @@ import { db,auth } from '../../firebase-config.js';
 import Tweet from "../posts/Tweet.js";
 import Pimage from "../posts/Pimage.js"
 import Pvideo from "../posts/Pvideo.js";
+import { useNavigate } from "react-router-dom";
 const Home = ({isLoggedIn}) => {
+    const navigate=useNavigate();
     const [postList, setPostList] = useState([]);
     const [updatePostList,setUpdatePostList] = useState(true);
+
+    function externalRedirect(id){
+      navigate("posts/"+id)
+    }
     const deletePost = useCallback(async (id) => {
       const postDoc = doc(db, "posts", id);
       await deleteDoc(postDoc);
@@ -43,17 +49,14 @@ const Home = ({isLoggedIn}) => {
                 <div className="title">
                   <h1>{post.title}</h1>
                 </div>
-                <div className="deletePost">
-                  {isLoggedIn() && post.author.id === auth.currentUser.uid && (
-                    <button
-                      onClick={() => {
-                        deletePost(post.id);
-                      }}
-                    >
-                      {" "}
-                      &#128465;
-                    </button>
-                  )}
+                <div className="postExternalLink" onClick={
+                  ()=>{
+                    externalRedirect(post.id)
+                  }
+                }>
+                  <button>
+                    &#128279;
+                  </button>
                 </div>
               </div>
             {
@@ -65,7 +68,21 @@ const Home = ({isLoggedIn}) => {
                 <Pvideo content = {post.content}/>:
               <></>
             }
-            <h3>@{post.author.name}</h3>
+            <div className="postFooter">
+              <h3 className="author">@{post.author.name}</h3>
+              <div className="deletePost">
+                {isLoggedIn() && post.author.id === auth.currentUser.uid && (
+                  <button
+                    onClick={() => {
+                      deletePost(post.id);
+                    }}
+                  >
+                    {" "}
+                    &#128465;
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
           )
         })}
