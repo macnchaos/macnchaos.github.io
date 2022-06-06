@@ -17,16 +17,25 @@ import { auth } from "../firebase-config";
 
 function DesktopApp() {
   const [isAuth,setIsAuth] = useState(false);
-
+  
   const isLoggedIn = ()=>{
     const user = auth.currentUser;
     if(user){
+      if(isAuth===false){
+        localStorage.setItem("isAuth",true);
+        setIsAuth(true);
+      }
       return true;
     }
     else{
+      if(isAuth===true){
+        localStorage.setItem("isAuth",false);
+        setIsAuth(false);
+      }
       return false;
     }
-  }
+  };
+
   const signUserOut = ()=>{
     signOut(auth).then(()=>{
       localStorage.clear()
