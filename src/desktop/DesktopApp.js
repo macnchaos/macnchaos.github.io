@@ -18,6 +18,15 @@ import { auth } from "../firebase-config";
 function DesktopApp() {
   const [isAuth,setIsAuth] = useState(false);
 
+  const isLoggedIn = ()=>{
+    const user = auth.currentUser;
+    if(user){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
   const signUserOut = ()=>{
     signOut(auth).then(()=>{
       localStorage.clear()
@@ -32,9 +41,7 @@ function DesktopApp() {
           Home
         </Link>
         {
-          !isAuth ? <Link to="/login">
-            Login
-          </Link> : 
+          isLoggedIn()? 
           <>
             <Link to="/createpost">
               Create
@@ -42,13 +49,17 @@ function DesktopApp() {
             
             <button align="right" className="desktop-button-logout" onClick={signUserOut}> LogOut </button>
           </>
+          :
+          <Link to="/login">
+            Login
+          </Link> 
         }
       </nav>
       <Routes>
-        <Route path = "/" element={<Home isAuth={isAuth}/>} />
-        <Route path = "/createpost" element={<CreatePost isAuth={isAuth}/>} />
+        <Route path = "/" element={<Home isLoggedIn={isLoggedIn}/>} />
+        <Route path = "/createpost" element={<CreatePost isLoggedIn={isLoggedIn}/>} />
         <Route path = "/login" element={<Login setIsAuth={setIsAuth}/>} />
-        <Route path = "/posts/:id" element={<Posts isAuth={isAuth}/>} />
+        <Route path = "/posts/:id" element={<Posts isLoggedIn={isLoggedIn}/>} />
       </Routes>
     </Router>
   );

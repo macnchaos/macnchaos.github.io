@@ -4,7 +4,7 @@ import { db,auth } from '../../firebase-config.js';
 import Tweet from "../posts/Tweet.js";
 import Pimage from "../posts/Pimage.js"
 import Pvideo from "../posts/Pvideo.js";
-const Home = ({isAuth}) => {
+const Home = ({isLoggedIn}) => {
     const [postList, setPostList] = useState([]);
     const [updatePostList,setUpdatePostList] = useState(true);
     const deletePost = useCallback(async (id) => {
@@ -44,7 +44,7 @@ const Home = ({isAuth}) => {
                   <h1>{post.title}</h1>
                 </div>
                 <div className="deletePost">
-                  {isAuth && post.author.id === auth.currentUser.uid && (
+                  {isLoggedIn() && post.author.id === auth.currentUser.uid && (
                     <button
                       onClick={() => {
                         deletePost(post.id);

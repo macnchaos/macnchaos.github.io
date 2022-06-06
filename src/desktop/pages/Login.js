@@ -9,6 +9,7 @@ const Login = ({setIsAuth}) => {
     signInWithPopup(auth,provider).then((result)=>{
       localStorage.setItem("isAuth",true);
       setIsAuth(true);
+      console.log(auth)
       navigate("/");
     })
   };
