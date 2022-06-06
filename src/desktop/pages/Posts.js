@@ -1,76 +1,72 @@
+import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import React, { useCallback, useEffect, useState } from "react";
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { useNavigate, useParams } from "react-router-dom";
 import { db,auth } from '../../firebase-config.js';
 import Tweet from "../posts/Tweet.js";
-import Pimage from "../posts/Pimage.js"
-import Pvideo from "../posts/Pvideo.js";
+import Pimage from "../posts/Pimage";
+import Pvideo from "../posts/Pvideo";
+// http://localhost:3000/posts/CvqdLhNbgLvJoksv9v7H
 const Posts = ({isAuth}) => {
-    const [postList, setPostList] = useState([]);
-    const [updatePostList,setUpdatePostList] = useState(true);
-    const deletePost = useCallback(async (id) => {
-      const postDoc = doc(db, "posts", id);
-      await deleteDoc(postDoc);
-      console.log("inside deletePost useCallback")
-      setUpdatePostList(true);
-    },[]);
-  
-    useEffect(() => {
-      if (!updatePostList){
-        return;
+  let navigate = useNavigate();
+  const [post,setPost] = useState({
+    author:{
+      name:"loading content"
+    }
+  });
+  const [params,setParams] = useState(useParams());
+  const deletePost = useCallback(async (id) => {
+    const postDoc = doc(db, "posts", id);
+    await deleteDoc(postDoc);
+    console.log("inside deletePost useCallback")
+    navigate("/");
+  },[navigate]);
+  useEffect(()=>{
+    const getPost = async ()=>{
+      const docRef = doc(db, "posts",params.id);
+      const docSnap = await getDoc(docRef)
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+        setPost(docSnap.data());
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
       }
-      setUpdatePostList(false)
-      const postCollectionRef = collection(db, "posts");
-      const getPosts = async () => {
-        //creating a new function because we need to do this asynchronously
-        const data = await getDocs(postCollectionRef);
-        setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      };
-      console.log("inside Post render useEffect");
-      
-      getPosts();
-    }, [updatePostList]);
-    //empty dependency => [] means call function only on first mount(may be on end also until app not in production)
-    //https://blog.logrocket.com/solve-react-useeffect-hook-infinite-loop-patterns/
-   
-    
-  
-    return (
-      <div className="homePage">
-        {postList.map((post) => {
-          return (
-            <div className="post">  
-              <div className="postHeader">
-                <div className="title">
-                  <h1>{post.title}</h1>
-                </div>
-                <div className="deletePost">
-                  {isAuth && post.author.id === auth.currentUser.uid && (
-                    <button
-                      onClick={() => {
-                        deletePost(post.id);
-                      }}
-                    >
-                      {" "}
-                      &#128465;
-                    </button>
-                  )}
-                </div>
-              </div>
-            {
-              post.postType === "macTweet" ?
-                <Tweet content = {post.content}/>:
-              post.postType === "macImage" ?
-                <Pimage content = {post.content}/>:
-              post.postType === "macVideo" ?
-                <Pvideo content = {post.content}/>:
-              <></>
-            }
-            <h3>@{post.author.name}</h3>
+    }
+    getPost();
+  },[params]);
+  return (
+    <div className="homePage">
+      <div className="post">
+        <div className="postHeader">
+          <div className="title">
+            <h1>{post.title}</h1>
           </div>
-          )
-        })}
-      </div>
-    );
+          <div className="deletePost">
+            {isAuth && post.author.id === auth.currentUser.uid && (
+              <button
+                onClick={() => {
+                  deletePost(post.id);
+                }}
+              >
+                {" "}
+                &#128465;
+              </button>
+            )}
+          </div>
+        </div>
+      {
+        post.postType === "macTweet" ?
+          <Tweet content = {post.content}/>:
+        post.postType === "macImage" ?
+          <Pimage content = {post.content}/>:
+        post.postType === "macVideo" ?
+          <Pvideo content = {post.content}/>:
+        <></>
+      }
+      <h3>@{post.author.name}</h3>
+    </div>
+    </div>
+  )
 };
 
 export default Posts;

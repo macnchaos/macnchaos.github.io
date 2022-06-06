@@ -10,6 +10,7 @@ import {
 import Home from "./pages/Home";
 import CreatePost from "./pages/CreatePost";
 import Login from "./pages/Login";
+import Posts from "./pages/Posts";
 import {signOut} from "firebase/auth";
 import { auth } from "../firebase-config";
 
@@ -47,6 +48,7 @@ function DesktopApp() {
         <Route path = "/" element={<Home isAuth={isAuth}/>} />
         <Route path = "/createpost" element={<CreatePost isAuth={isAuth}/>} />
         <Route path = "/login" element={<Login setIsAuth={setIsAuth}/>} />
+        <Route path = "/posts/:id" element={<Posts isAuth={isAuth}/>} />
       </Routes>
     </Router>
   );
