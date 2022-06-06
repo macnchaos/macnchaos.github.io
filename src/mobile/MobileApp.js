@@ -11,15 +11,33 @@ import Home from "./pages/Home";
 import CreatePost from "./pages/CreatePost";
 import Login from "./pages/Login";
 import Posts from "./pages/Posts";
+import { auth } from "../firebase-config";
 
 function MobileApp() {
   const [isAuth,setIsAuth] = useState(false);
+  const isLoggedIn = ()=>{
+    const user = auth.currentUser;
+    if(user){
+      if(isAuth===false){
+        localStorage.setItem("isAuth",true);
+        setIsAuth(true);
+      }
+      return true;
+    }
+    else{
+      if(isAuth===true){
+        localStorage.setItem("isAuth",false);
+        setIsAuth(false);
+      }
+      return false;
+    }
+  };
   return (
     <Router>
-      <HamburgerMenu isAuth={isAuth} setIsAuth={setIsAuth}/>
+      <HamburgerMenu isLoggedIn={isLoggedIn} setIsAuth={setIsAuth}/>
       <Routes>
         <Route path = "/" element={<Home />} />
-        <Route path = "/createpost" element={<CreatePost isAuth={isAuth}/>} />
+        <Route path = "/createpost" element={<CreatePost isLoggedIn={isLoggedIn}/>} />
         <Route path = "/login" element={<Login setIsAuth={setIsAuth}/>} />
         <Route path = "/posts/:id" element={<Posts isAuth={isAuth}/>} />
       </Routes>

@@ -1,24 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { db,auth } from '../../firebase-config.js';
+import React, { useEffect, useState } from "react";
+import { collection, getDocs} from "firebase/firestore";
+import { db } from '../../firebase-config.js';
 import Tweet from "../posts/Tweet.js";
 import Pimage from "../posts/Pimage.js"
 import Pvideo from "../posts/Pvideo.js";
-const Home = ({isAuth}) => {
+const Home = () => {
     const [postList, setPostList] = useState([]);
-    const [updatePostList,setUpdatePostList] = useState(true);
-    const deletePost = useCallback(async (id) => {
-      const postDoc = doc(db, "posts", id);
-      await deleteDoc(postDoc);
-      console.log("inside deletePost useCallback")
-      setUpdatePostList(true);
-    },[]);
   
     useEffect(() => {
-      if (!updatePostList){
-        return;
-      }
-      setUpdatePostList(false)
       const postCollectionRef = collection(db, "posts");
       const getPosts = async () => {
         //creating a new function because we need to do this asynchronously
@@ -28,7 +17,7 @@ const Home = ({isAuth}) => {
       console.log("inside Post render useEffect");
       
       getPosts();
-    }, [updatePostList]);
+    }, []);
     //empty dependency => [] means call function only on first mount(may be on end also until app not in production)
     //https://blog.logrocket.com/solve-react-useeffect-hook-infinite-loop-patterns/
    
