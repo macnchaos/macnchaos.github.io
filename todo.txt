@@ -4,6 +4,8 @@
  - ✅ correct the login and create post page dimensions for mobile view
  - incremental datafetch along with scrolling or more button <- speedup website
  - timestamp or some kind of id
+ - user management
+ - macnchaos banner
  - ✅ build the dynamic link that constructs page for each individual post
  - ✅ login auth not persisting for long(use caches etc)
  - ✅ delete button on posts page
@@ -20,6 +22,7 @@
  - PDF popup viewer in desktop viewer
  - PDF popup viewer in mobile viewer
  - PDF input from create page
+ - Host in macnchaos.in
 
  Logic - Signin >> Multimedia posting >> incremental datafetch
  Login failing in github and heroku because their redirect uri are not registered with Google

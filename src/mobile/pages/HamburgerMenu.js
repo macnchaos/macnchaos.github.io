@@ -139,6 +139,11 @@ function HamburgerMenu({isLoggedIn,setIsAuth}) {
               Home
             </ItemLink>
           </li>
+          <li>
+            <ItemLink onClick={handleClick} to="/blog">
+              Blog
+            </ItemLink>
+          </li>
           {
             isLoggedIn()===false ? <li>
               <ItemLink onClick={handleClick} to="/login">
