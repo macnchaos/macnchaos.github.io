@@ -6,6 +6,7 @@
  - timestamp or some kind of id
  - user management
  - macnchaos banner
+ - create should redirect to blog, not home
  - ✅ build the dynamic link that constructs page for each individual post
  - ✅ login auth not persisting for long(use caches etc)
  - ✅ delete button on posts page
