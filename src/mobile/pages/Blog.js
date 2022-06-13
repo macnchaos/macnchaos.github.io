@@ -86,12 +86,12 @@ const Blog = () => {
         })}
         {
           showMoreButton?
-          <button onClick={
+          <button className="glow-on-hover" onClick={
               ()=>{
                   setUpdatePostList(true)
               }
           }>
-              +
+              Load More
           </button>:
           <></>
         }
