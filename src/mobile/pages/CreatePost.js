@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {addDoc, collection} from "firebase/firestore";
+import {addDoc, collection, Timestamp} from "firebase/firestore";
 import { auth, db } from '../../firebase-config.js';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ const CreatePost = ({ isAuth }) => {
   const [postType, setPostType] = useState("");
 
   let navigate = useNavigate();
-
+  
   const articleCollectionRef = collection(db,"posts");
   const createPost = async () => { //add rule in firebase table to allow only admins to write
     var content = {
@@ -30,7 +30,8 @@ const CreatePost = ({ isAuth }) => {
         name:auth.currentUser.displayName,
         id:auth.currentUser.uid
       },
-      content
+      content,
+      timeStamp:Timestamp.now()
     });
     navigate("/");
   }
