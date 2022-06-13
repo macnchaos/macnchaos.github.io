@@ -14,32 +14,24 @@ import Login from "./pages/Login";
 import Posts from "./pages/Posts";
 import Blog from "./pages/Blog";
 import { auth } from "../firebase-config";
+import { onAuthStateChanged } from "firebase/auth";
 
 function MobileApp() {
   const [isAuth,setIsAuth] = useState(false);
-  const isLoggedIn = ()=>{
-    const user = auth.currentUser;
+  onAuthStateChanged(auth,(user)=>{
     if(user){
-      if(isAuth===false){
-        localStorage.setItem("isAuth",true);
-        setIsAuth(true);
-      }
-      return true;
+      setIsAuth(true);
+    }else{
+      localStorage.clear();
+      setIsAuth(false);
     }
-    else{
-      if(isAuth===true){
-        localStorage.setItem("isAuth",false);
-        setIsAuth(false);
-      }
-      return false;
-    }
-  };
+  })
   return (
     <Router>
-      <HamburgerMenu isLoggedIn={isLoggedIn} setIsAuth={setIsAuth}/>
+      <HamburgerMenu isAuth={isAuth} setIsAuth={setIsAuth}/>
       <Routes>
         <Route path = "/" element={<Home />} />
-        <Route path = "/createpost" element={<CreatePost isLoggedIn={isLoggedIn}/>} />
+        <Route path = "/createpost" element={<CreatePost isAuth={isAuth}/>} />
         <Route path = "/login" element={<Login setIsAuth={setIsAuth}/>} />
         <Route path = "/posts/:id" element={<Posts isAuth={isAuth}/>} />
         <Route path = "/posts" element={<Blog isAuth={isAuth}/>} />

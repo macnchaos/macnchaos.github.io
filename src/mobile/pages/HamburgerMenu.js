@@ -115,7 +115,7 @@ const ItemLink = styled(NavLink)`
     transform: translateX(1rem);
   }
 `;
-function HamburgerMenu({isLoggedIn,setIsAuth}) {
+function HamburgerMenu({isAuth,setIsAuth}) {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   const signUserOut = ()=>{
@@ -145,7 +145,7 @@ function HamburgerMenu({isLoggedIn,setIsAuth}) {
             </ItemLink>
           </li>
           {
-            isLoggedIn()===false ? <li>
+            isAuth===false ? <li>
               <ItemLink onClick={handleClick} to="/login">
                 Login
               </ItemLink>
