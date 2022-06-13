@@ -88,12 +88,12 @@ const Blog = () => {
         })}
         {
           showMoreButton?
-          <button onClick={
+          <button className="openMore" onClick={
               ()=>{
                   setUpdatePostList(true)
               }
           }>
-              +
+              More Posts
           </button>:
           <></>
         }
