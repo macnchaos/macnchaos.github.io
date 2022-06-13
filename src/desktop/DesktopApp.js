@@ -4,8 +4,7 @@ import './NeonSign.css';
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
 import Home from "./pages/Home";
@@ -15,79 +14,37 @@ import Posts from "./pages/Posts";
 import Blog from "./pages/Blog";
 import PaginationCreateItem from "./pages/PaginationCreateItem";
 import PaginationBlog from "./pages/PaginationBlog";
-import {signOut} from "firebase/auth";
+import DesktopNavbar from "./pages/DesktopNavbar";
+import {onAuthStateChanged} from "firebase/auth";
 import { auth } from "../firebase-config";
 
 
 function DesktopApp() {
   const [isAuth,setIsAuth] = useState(false);
   
-  const isLoggedIn = ()=>{
-    const user = auth.currentUser;
+  onAuthStateChanged(auth,(user)=>{
     if(user){
-      if(isAuth===false){
-        localStorage.setItem("isAuth",true);
-        setIsAuth(true);
-      }
-      return true;
+      setIsAuth(true);
+    }else{
+      localStorage.clear();
+      setIsAuth(false);
     }
-    else{
-      if(isAuth===true){
-        localStorage.setItem("isAuth",false);
-        setIsAuth(false);
-      }
-      return false;
-    }
-  };
+  })
 
-  const signUserOut = ()=>{
-    signOut(auth).then(()=>{
-      localStorage.clear()
-      setIsAuth(false)
-      window.location.pathname = "/login"
-    })
-  }
+  
   return (
     <Router>
-      <nav>
-        <Link to="/">
-          Home
-        </Link>
-        <Link to="/blog">
-          Blog
-        </Link>
-        <Link to="/PaginationBlog">
-          PaginationBlog
-        </Link>
-        {
-          isLoggedIn()? 
-          <>
-            <Link to="/createpost">
-              Create
-            </Link>
-
-            <Link to="/PaginationCreateItem">
-              CreatePaginated
-            </Link>
-            
-            <button align="right" className="desktop-button-logout" onClick={signUserOut}> LogOut </button>
-          </>
-          :
-          <Link to="/login">
-            Login
-          </Link> 
-        }
-      </nav>
+      <DesktopNavbar isAuth={isAuth} setIsAuth={setIsAuth} />
       <p class="link">Mayank Chaturvedi</p>
       <Routes>
-        <Route path = "/" element={<Home isLoggedIn={isLoggedIn}/>} />
-        <Route path = "/createpost" element={<CreatePost isLoggedIn={isLoggedIn}/>} />
+        <Route path = "/" element={<Home isAuth={isAuth}/>} />
+        <Route path = "/createpost" element={<CreatePost isAuth={isAuth}/>} />
         <Route path = "/login" element={<Login setIsAuth={setIsAuth}/>} />
-        <Route path = "/posts/:id" element={<Posts isLoggedIn={isLoggedIn}/>} />
-        <Route path = "/posts" element={<Blog isLoggedIn={isLoggedIn}/>} />
-        <Route path = "/blog" element={<Blog isLoggedIn={isLoggedIn}/>} />
-        <Route path = "/PaginationBlog" element={<PaginationBlog isLoggedIn={isLoggedIn}/>} />
-        <Route path = "/PaginationCreateItem" element={<PaginationCreateItem isLoggedIn={isLoggedIn}/>} />
+        <Route path = "/posts/:id" element={<Posts isAuth={isAuth}/>} />
+        <Route path = "/posts" element={<Blog isAuth={isAuth}/>} />
+        <Route path = "/blog" element={<Blog isAuth={isAuth}/>} />
+        <Route path = "/PaginationBlog" element={<PaginationBlog isAuth={isAuth}/>} />
+        <Route path = "/PaginationCreateItem" element={<PaginationCreateItem isAuth={isAuth}/>} />
       </Routes>
     </Router>
   );

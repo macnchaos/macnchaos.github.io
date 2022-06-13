@@ -1,21 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { collection, query, deleteDoc, doc, limit, getDocs, orderBy, startAfter } from "firebase/firestore";
-import { db,auth } from '../../firebase-config.js';
+import React, { useEffect, useState } from "react";
+import { collection, query, limit, getDocs, orderBy, startAfter } from "firebase/firestore";
+import { db} from '../../firebase-config.js';
 import Tweet from "../posts/Tweet.js";
 import Pimage from "../posts/Pimage.js"
 import Pvideo from "../posts/Pvideo.js";
-const PaginationBlog = ({isLoggedIn}) => {
+const PaginationBlog = () => {
     const [postList, setPostList] = useState([]);
     const [updatePostList,setUpdatePostList] = useState(true);
     function externalRedirect(id){
         window.location.pathname = '/posts/'+id;
     }
-    const deletePost = useCallback(async (id) => {
-      const postDoc = doc(db, "posts", id);
-      await deleteDoc(postDoc);
-      console.log("inside deletePost useCallback")
-      setUpdatePostList(true);
-    },[]);
   
     useEffect(() => {
       if (!updatePostList){
@@ -33,8 +27,6 @@ const PaginationBlog = ({isLoggedIn}) => {
       }
       const postCollectionRef = collection(db, "paginationTest");
       const getPosts = async () => {
-        //creating a new function because we need to do this asynchronously
-        console.log(lastPost.timeStamp)
         const dataQuery = query(postCollectionRef, limit(2), orderBy("timeStamp","desc"), startAfter(lastPost["timeStamp"]));
         
         const data = await getDocs(dataQuery)
@@ -80,18 +72,6 @@ const PaginationBlog = ({isLoggedIn}) => {
             }
             <div className="postFooter">
               <h3 className="author">@{post.author.name}</h3>
-              <div className="deletePost">
-                {isLoggedIn() && post.author.id === auth.currentUser.uid && (
-                  <button
-                    onClick={() => {
-                      deletePost(post.id);
-                    }}
-                  >
-                    {" "}
-                    &#128465;
-                  </button>
-                )}
-              </div>
             </div>
           </div>
           )

@@ -3,7 +3,7 @@ import {addDoc, collection, Timestamp} from "firebase/firestore";
 import { auth, db } from '../../firebase-config.js';
 import { useNavigate } from 'react-router-dom';
 
-const PaginationCreateItem = ({ isLoggedIn }) => {
+const PaginationCreateItem = ({ isAuth }) => {
   const [title, setTitle] = useState("");
   const [postText, setPostText] = useState("");
   const [postLink, setPostLink] = useState("");
@@ -38,7 +38,7 @@ const PaginationCreateItem = ({ isLoggedIn }) => {
 
   useEffect( //can also authenticate post creator here
     ()=>{
-      if(!isLoggedIn()){
+      if(!isAuth){
         navigate("/login");
       }
     }

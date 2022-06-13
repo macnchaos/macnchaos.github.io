@@ -3,7 +3,7 @@ import {addDoc, collection} from "firebase/firestore";
 import { auth, db } from '../../firebase-config.js';
 import { useNavigate } from 'react-router-dom';
 
-const CreatePost = ({ isLoggedIn }) => {
+const CreatePost = ({ isAuth }) => {
   const [title, setTitle] = useState("");
   const [postText, setPostText] = useState("");
   const [postLink, setPostLink] = useState("");
@@ -37,7 +37,7 @@ const CreatePost = ({ isLoggedIn }) => {
 
   useEffect( //can also authenticate post creator here
     ()=>{
-      if(!isLoggedIn()){
+      if(!isAuth){
         navigate("/login");
       }
     }

@@ -6,7 +6,7 @@ import Tweet from "../posts/Tweet.js";
 import Pimage from "../posts/Pimage";
 import Pvideo from "../posts/Pvideo";
 // http://localhost:3000/posts/CvqdLhNbgLvJoksv9v7H
-const Posts = ({isLoggedIn}) => {
+const Posts = ({isAuth}) => {
   let navigate = useNavigate();
   const [post,setPost] = useState({
     author:{
@@ -47,7 +47,7 @@ const Posts = ({isLoggedIn}) => {
             <h1>{post.title}</h1>
           </div>
           <div className="deletePost">
-            {isLoggedIn() && post.author.id === auth.currentUser.uid && (
+            {isAuth && post.author.id === auth.currentUser.uid && (
               <button
                 onClick={() => {
                   deletePost(params.id);

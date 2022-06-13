@@ -4,7 +4,7 @@ import { db,auth } from '../../firebase-config.js';
 import Tweet from "../posts/Tweet.js";
 import Pimage from "../posts/Pimage.js"
 import Pvideo from "../posts/Pvideo.js";
-const Blog = ({isLoggedIn}) => {
+const Blog = ({isAuth}) => {
     const [postList, setPostList] = useState([]);
     const [updatePostList,setUpdatePostList] = useState(true);
 
@@ -69,7 +69,7 @@ const Blog = ({isLoggedIn}) => {
             <div className="postFooter">
               <h3 className="author">@{post.author.name}</h3>
               <div className="deletePost">
-                {isLoggedIn() && post.author.id === auth.currentUser.uid && (
+                {isAuth && post.author.id === auth.currentUser.uid && (
                   <button
                     onClick={() => {
                       deletePost(post.id);
