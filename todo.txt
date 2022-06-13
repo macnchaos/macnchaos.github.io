@@ -3,10 +3,13 @@
  - ✅ Video, Image in create View
  - ✅ correct the login and create post page dimensions for mobile view
  - incremental datafetch along with scrolling or more button <- speedup website
+ - https://stackoverflow.com/questions/61572573/whats-the-best-way-to-paginate-and-filters-large-set-of-data-in-firebase
  - timestamp or some kind of id
  - user management
- - macnchaos banner
- - create should redirect to blog, not home
+ - ✅macnchaos banner
+ - redirecting from blog-> specific posts page, do we need to make firebase call?
+ - create should redirect to blog, not home? think about this and implement
+ - login not persisting for homescreen
  - ✅ build the dynamic link that constructs page for each individual post
  - ✅ login auth not persisting for long(use caches etc)
  - ✅ delete button on posts page
@@ -16,14 +19,19 @@
     : the redirect link issue, firebase allows only localhost and it's provided
       link as allowed redirects for oauth. Can setup personal domain too, but not 
       github.io or heroku.com
- - Comments
+ - Comments recursively
  - Likes
- - loading screen
+ - loading screen : the dimension GIF?
  - sticky nav bar for desktop
  - PDF popup viewer in desktop viewer
  - PDF popup viewer in mobile viewer
  - PDF input from create page
  - Host in macnchaos.in
+ - SEO
+ - user profile management
+ - chat option
+ - automation of creation of links for photos
+ - automation of creation of links for videos
 
  Logic - Signin >> Multimedia posting >> incremental datafetch
  Login failing in github and heroku because their redirect uri are not registered with Google

@@ -13,6 +13,8 @@ import CreatePost from "./pages/CreatePost";
 import Login from "./pages/Login";
 import Posts from "./pages/Posts";
 import Blog from "./pages/Blog";
+import PaginationCreateItem from "./pages/PaginationCreateItem";
+import PaginationBlog from "./pages/PaginationBlog";
 import {signOut} from "firebase/auth";
 import { auth } from "../firebase-config";
 
@@ -54,11 +56,18 @@ function DesktopApp() {
         <Link to="/blog">
           Blog
         </Link>
+        <Link to="/PaginationBlog">
+          PaginationBlog
+        </Link>
         {
           isLoggedIn()? 
           <>
             <Link to="/createpost">
               Create
+            </Link>
+
+            <Link to="/PaginationCreateItem">
+              CreatePaginated
             </Link>
             
             <button align="right" className="desktop-button-logout" onClick={signUserOut}> LogOut </button>
@@ -77,6 +86,8 @@ function DesktopApp() {
         <Route path = "/posts/:id" element={<Posts isLoggedIn={isLoggedIn}/>} />
         <Route path = "/posts" element={<Blog isLoggedIn={isLoggedIn}/>} />
         <Route path = "/blog" element={<Blog isLoggedIn={isLoggedIn}/>} />
+        <Route path = "/PaginationBlog" element={<PaginationBlog isLoggedIn={isLoggedIn}/>} />
+        <Route path = "/PaginationCreateItem" element={<PaginationCreateItem isLoggedIn={isLoggedIn}/>} />
       </Routes>
     </Router>
   );
