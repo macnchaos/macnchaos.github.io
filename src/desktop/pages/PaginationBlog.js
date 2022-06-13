@@ -23,7 +23,10 @@ const PaginationBlog = ({isLoggedIn}) => {
       }
       setUpdatePostList(false)
       var lastPost={
-          timeStamp:0
+          timeStamp:{
+            seconds:8640000000000000,
+            nanoseconds:8640000000000000
+          }
       }
       if(postList.length > 0){
         lastPost = postList[postList.length-1]
@@ -31,8 +34,8 @@ const PaginationBlog = ({isLoggedIn}) => {
       const postCollectionRef = collection(db, "paginationTest");
       const getPosts = async () => {
         //creating a new function because we need to do this asynchronously
-        console.log(lastPost)
-        const dataQuery = query(postCollectionRef, limit(2), orderBy("timeStamp"), startAfter(lastPost["timeStamp"]));
+        console.log(lastPost.timeStamp)
+        const dataQuery = query(postCollectionRef, limit(2), orderBy("timeStamp","desc"), startAfter(lastPost["timeStamp"]));
         
         const data = await getDocs(dataQuery)
         const appendList = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
