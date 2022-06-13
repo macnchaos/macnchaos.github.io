@@ -16,18 +16,11 @@ const DesktopNavbar = ({isAuth}) => {
             <Link to="/blog">
             Blog
             </Link>
-            <Link to="/PaginationBlog">
-            PaginationBlog
-            </Link>
             {
             isAuth? 
             <>
                 <Link to="/createpost">
                 Create
-                </Link>
-
-                <Link to="/PaginationCreateItem">
-                CreatePaginated
                 </Link>
                 
                 <button align="right" className="desktop-button-logout" onClick={signUserOut}> LogOut </button>

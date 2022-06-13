@@ -12,8 +12,6 @@ import CreatePost from "./pages/CreatePost";
 import Login from "./pages/Login";
 import Posts from "./pages/Posts";
 import Blog from "./pages/Blog";
-import PaginationCreateItem from "./pages/PaginationCreateItem";
-import PaginationBlog from "./pages/PaginationBlog";
 import DesktopNavbar from "./pages/DesktopNavbar";
 import {onAuthStateChanged} from "firebase/auth";
 import { auth } from "../firebase-config";
@@ -43,8 +41,6 @@ function DesktopApp() {
         <Route path = "/posts/:id" element={<Posts isAuth={isAuth}/>} />
         <Route path = "/posts" element={<Blog isAuth={isAuth}/>} />
         <Route path = "/blog" element={<Blog isAuth={isAuth}/>} />
-        <Route path = "/PaginationBlog" element={<PaginationBlog isAuth={isAuth}/>} />
-        <Route path = "/PaginationCreateItem" element={<PaginationCreateItem isAuth={isAuth}/>} />
       </Routes>
     </Router>
   );
