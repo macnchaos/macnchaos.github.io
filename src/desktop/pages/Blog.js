@@ -50,7 +50,10 @@ const Blog = () => {
     //empty dependency => [] means call function only on first mount(may be on end also until app not in production)
     //https://blog.logrocket.com/solve-react-useeffect-hook-infinite-loop-patterns/
    
-    
+    function convertToDate(timeStamp){
+      var theDate = new Date(timeStamp.seconds*1000);
+      return theDate.toString().slice(4,16) 
+    }
   
     return (
       <div className="homePage">
@@ -82,6 +85,7 @@ const Blog = () => {
             }
             <div className="postFooter">
               <h3 className="author">@{post.author.name}</h3>
+              <p>{convertToDate(post.timeStamp)}</p>
             </div>
           </div>
           )

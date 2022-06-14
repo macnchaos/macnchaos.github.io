@@ -1,4 +1,4 @@
-import { deleteDoc, doc, getDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, Timestamp } from "firebase/firestore";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { db,auth } from '../../firebase-config.js';
@@ -11,10 +11,15 @@ const Posts = ({isAuth}) => {
   const [post,setPost] = useState({
     author:{
       name:"loading content"
-    }
+    },
+    timeStamp:Timestamp.now()
   });
   const params = useParams();
   
+  function convertToDate(timeStamp){
+    var theDate = new Date(timeStamp.seconds*1000);
+    return theDate.toString().slice(4,16) 
+  }
   const deletePost = useCallback(async (id) => {
     const postDoc = doc(db, "posts", id);
     await deleteDoc(postDoc);
@@ -32,7 +37,8 @@ const Posts = ({isAuth}) => {
         setPost({
           author:{
             name:"Please recheck the URL. You seem to have landed in the unknown territories of the internet"
-          }
+          },
+          timeStamp:Timestamp.now()
         })
         console.log("No such document!");
       }
@@ -68,7 +74,10 @@ const Posts = ({isAuth}) => {
           <Pvideo content = {post.content}/>:
         <></>
       }
-      <h3>@{post.author.name}</h3>
+      <div className="postFooter">
+        <h3 className="author">@{post.author.name}</h3>
+        <p>{convertToDate(post.timeStamp)}</p>
+      </div>
     </div>
     </div>
   )

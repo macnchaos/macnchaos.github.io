@@ -50,7 +50,10 @@ const Blog = () => {
       getPosts();
     }, [updatePostList,postList]);
    
-    
+    function convertToDate(timeStamp){
+      var theDate = new Date(timeStamp.seconds*1000);
+      return theDate.toString().slice(4,16) 
+    }
   
     return (
       <div className="mobileHomePage">
@@ -80,7 +83,10 @@ const Blog = () => {
                 <Pvideo content = {post.content}/>:
               <></>
             }
-            <h3>@{post.author.name}</h3>
+            <div className="mobilePostFooter">
+              <h3 className="author">@{post.author.name}</h3>
+              <p className="date">{convertToDate(post.timeStamp)}</p>
+            </div>
           </div>
           )
         })}

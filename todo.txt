@@ -2,14 +2,15 @@
  - ✅ Video, Image in mobile View
  - ✅ Video, Image in create View
  - ✅ correct the login and create post page dimensions for mobile view
- - incremental datafetch along with scrolling or more button <- speedup website
- - https://stackoverflow.com/questions/61572573/whats-the-best-way-to-paginate-and-filters-large-set-of-data-in-firebase
- - timestamp or some kind of id
+ - ✅ incremental datafetch along with scrolling or more button <- speedup website
+ - ✅ https://stackoverflow.com/questions/61572573/whats-the-best-way-to-paginate-and-filters-large-set-of-data-in-firebase
+ - ✅ timestamp or some kind of id
  - user management
  - ✅macnchaos banner
+ - Add time in posts
  - redirecting from blog-> specific posts page, do we need to make firebase call?
  - create should redirect to blog, not home? think about this and implement
- - login not persisting for homescreen
+ - ✅ login not persisting for homescreen
  - ✅ build the dynamic link that constructs page for each individual post
  - ✅ login auth not persisting for long(use caches etc)
  - ✅ delete button on posts page
@@ -32,6 +33,7 @@
  - chat option
  - automation of creation of links for photos
  - automation of creation of links for videos
+ - inter website chat system
 
  Logic - Signin >> Multimedia posting >> incremental datafetch
  Login failing in github and heroku because their redirect uri are not registered with Google

@@ -282,3 +282,18 @@ textarea {
 .mobile-button-logout:disabled {
   box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
 }
+
+.mobilePostFooter{
+  display:flex
+}
+.mobilePostFooter .author {
+  flex: 50%;
+  font-size:15px;
+}
+.mobilePostFooter .date {
+  flex: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size:15px;
+}

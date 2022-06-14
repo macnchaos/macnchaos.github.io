@@ -1,4 +1,4 @@
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, Timestamp } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { db } from '../../firebase-config.js';
@@ -10,9 +10,14 @@ const Posts = () => {
   const [post,setPost] = useState({
     author:{
       name:"loading content"
-    }
+    },
+    timeStamp:Timestamp.now()
   });
   const params = useParams();
+  function convertToDate(timeStamp){
+    var theDate = new Date(timeStamp.seconds*1000);
+    return theDate.toString().slice(4,16) 
+  }
   useEffect(()=>{
     const getPost = async ()=>{
       const docRef = doc(db, "posts",params.id);
@@ -24,7 +29,8 @@ const Posts = () => {
         setPost({
           author:{
             name:"Please recheck the URL. You seem to have landed in the unknown territories of the internet"
-          }
+          },
+          timeStamp:Timestamp.now()
         })
         console.log("No such document!");
       }
@@ -48,7 +54,10 @@ const Posts = () => {
           <Pvideo content = {post.content}/>:
         <></>
       }
-      <h3>@{post.author.name}</h3>
+      <div className="mobilePostFooter">
+        <h3 className="author">@{post.author.name}</h3>
+        <p className="date">{convertToDate(post.timeStamp)}</p>
+      </div>
     </div>
     </div>
   )
