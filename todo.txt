@@ -7,7 +7,7 @@
  - ✅ timestamp or some kind of id
  - user management
  - ✅macnchaos banner
- - Add time in posts
+ - ✅ Add time in posts
  - redirecting from blog-> specific posts page, do we need to make firebase call?
  - create should redirect to blog, not home? think about this and implement
  - ✅ login not persisting for homescreen
@@ -20,7 +20,10 @@
     : the redirect link issue, firebase allows only localhost and it's provided
       link as allowed redirects for oauth. Can setup personal domain too, but not 
       github.io or heroku.com
- - Comments recursively
+ - Comments recursively (youtube style)
+ - Secure Database
+ - improve the create post interface - more intuitive and with restricted access
+ - caching the posts and pages so that we don't need to load everytime from database
  - Likes
  - loading screen : the dimension GIF?
  - sticky nav bar for desktop
