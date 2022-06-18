@@ -5,6 +5,7 @@ import { db,auth } from '../../firebase-config.js';
 import Tweet from "../posts/Tweet.js";
 import Pimage from "../posts/Pimage";
 import Pvideo from "../posts/Pvideo";
+import Comment from "../components/Comment.js";
 // http://localhost:3000/posts/CvqdLhNbgLvJoksv9v7H
 const Posts = ({isAuth}) => {
   let navigate = useNavigate();
@@ -15,6 +16,8 @@ const Posts = ({isAuth}) => {
     timeStamp:Timestamp.now()
   });
   const params = useParams();
+
+  const [commentId,setCommentId]=useState(params.id);
   
   function convertToDate(timeStamp){
     var theDate = new Date(timeStamp.seconds*1000);
@@ -23,8 +26,10 @@ const Posts = ({isAuth}) => {
   const deletePost = useCallback(async (id) => {
     const postDoc = doc(db, "posts", id);
     await deleteDoc(postDoc);
+    const commentDoc = doc(db, "comments", id);
+    await deleteDoc(commentDoc);
     console.log("inside deletePost useCallback")
-    navigate("/");
+    navigate("/blog");
   },[navigate]);
   useEffect(()=>{
     const getPost = async ()=>{
@@ -43,8 +48,10 @@ const Posts = ({isAuth}) => {
         console.log("No such document!");
       }
     }
-    getPost();
-  },[params]);
+    if(Object.keys(post).length===2){
+      getPost();
+    }
+  },[params,commentId,post]);
   return (
     <div className="homePage">
       <div className="post">
@@ -65,20 +72,23 @@ const Posts = ({isAuth}) => {
             )}
           </div>
         </div>
-      {
-        post.postType === "macTweet" ?
-          <Tweet content = {post.content}/>:
-        post.postType === "macImage" ?
-          <Pimage content = {post.content}/>:
-        post.postType === "macVideo" ?
-          <Pvideo content = {post.content}/>:
-        <></>
-      }
-      <div className="postFooter">
-        <h3 className="author">@{post.author.name}</h3>
-        <p>{convertToDate(post.timeStamp)}</p>
+        {
+          post.postType === "macTweet" ?
+            <Tweet content = {post.content}/>:
+          post.postType === "macImage" ?
+            <Pimage content = {post.content}/>:
+          post.postType === "macVideo" ?
+            <Pvideo content = {post.content}/>:
+          <></>
+        }
+        <div className="postFooter">
+          <h3 className="author">@{post.author.name}</h3>
+          <p>{convertToDate(post.timeStamp)}</p>
+        </div>
       </div>
-    </div>
+      <div className="commentContainer">
+        <Comment commentId={commentId} setSeed={setCommentId} isAuth={isAuth}/>
+      </div>
     </div>
   )
 };

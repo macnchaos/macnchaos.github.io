@@ -20,7 +20,12 @@
     : the redirect link issue, firebase allows only localhost and it's provided
       link as allowed redirects for oauth. Can setup personal domain too, but not 
       github.io or heroku.com
- - Comments recursively (youtube style)
+ - ✅ Comments recursively (youtube style) - desktop
+ - Comments recursively - replicate for mobile
+ - gap between two comments should increase
+ - ✅ allow a user to add more than one comment without refreshing the page
+ - allow submition of comment using enter key
+ - Graceful deletion of a post - deleting all the associated comments - tradeoff between complicating the frontend and leaving junk in database
  - Secure Database
  - improve the create post interface - more intuitive and with restricted access
  - caching the posts and pages so that we don't need to load everytime from database

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {addDoc, collection, Timestamp} from "firebase/firestore";
+import {addDoc, collection, doc, setDoc, Timestamp} from "firebase/firestore";
 import { auth, db } from '../../firebase-config.js';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,8 +22,8 @@ const CreatePost = ({ isAuth }) => {
     else if(postType==="macVideo"){
       content["url"]=postLink;
     }
-    
-    await addDoc(articleCollectionRef, {
+    const ctime = Timestamp.now()
+    const docRef = await addDoc(articleCollectionRef, {
       title,
       postType,
       author: {
@@ -31,9 +31,24 @@ const CreatePost = ({ isAuth }) => {
         id:auth.currentUser.uid
       },
       content,
-      timeStamp:Timestamp.now()
+      timeStamp:ctime
     });
-    navigate("/");
+    await setDoc(
+      doc(db,"comments",docRef.id),
+      {
+        "parent":docRef.id,
+        "children":[],
+        "author":{
+          name:auth.currentUser.displayName,
+          id:auth.currentUser.uid
+        },
+        "timeStamp":ctime,
+        "text":"",
+        "post_id":docRef.id,
+        "depth":0
+      }
+    );
+    navigate("/blog");
   }
 
   useEffect( //can also authenticate post creator here
