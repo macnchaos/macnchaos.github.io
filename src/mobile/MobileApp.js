@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import './MobileApp.css';
 import './NeonSign.css';
+import './components/Comment.css'
 import {
   BrowserRouter as Router,
   Routes,

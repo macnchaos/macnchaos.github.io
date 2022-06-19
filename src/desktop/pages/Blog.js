@@ -62,7 +62,7 @@ const Blog = () => {
             <div className="post">
               <div className="postHeader">
                 <div className="title">
-                  <h1>{post.title}</h1>
+                  <h2>{post.title}</h2>
                 </div>
                 <div className="postExternalLink" onClick={
                   ()=>{
@@ -84,7 +84,7 @@ const Blog = () => {
               <></>
             }
             <div className="postFooter">
-              <h3 className="author">@{post.author.name}</h3>
+              <h4 className="author">@{post.author.name}</h4>
               <p>{convertToDate(post.timeStamp)}</p>
             </div>
           </div>

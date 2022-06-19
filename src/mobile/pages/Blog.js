@@ -62,7 +62,7 @@ const Blog = () => {
             <div className="mobilePost">  
               <div className="mobilePostHeader">
                 <div className="title">
-                  <h1>{post.title}</h1>
+                  <h2>{post.title}</h2>
                 </div>
                 <div className="mobilePostExternalLink" onClick={
                   ()=>{
@@ -84,7 +84,7 @@ const Blog = () => {
               <></>
             }
             <div className="mobilePostFooter">
-              <h3 className="author">@{post.author.name}</h3>
+              <h4 className="author">@{post.author.name}</h4>
               <p className="date">{convertToDate(post.timeStamp)}</p>
             </div>
           </div>

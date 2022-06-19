@@ -50,14 +50,6 @@ const NewComment = ({commentId,isAuth,setData}) => {
                         (event)=>{
                             setCommentText(event.target.value)
                         }
-                    } onKeyPress={
-                        (event)=>{
-                            if(event.key==='Enter'){
-                                event.preventDefault();
-                                addComment(commentText);
-                                setCommentText("");
-                            }
-                        }
                     }/>
                     {
                         commentText!==""&&(<button

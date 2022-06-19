@@ -57,7 +57,7 @@ const Posts = ({isAuth}) => {
       <div className="post">
         <div className="postHeader">
           <div className="title">
-            <h1>{post.title}</h1>
+            <h2>{post.title}</h2>
           </div>
           <div className="deletePost">
             {isAuth && post.author.id === auth.currentUser.uid && (
@@ -82,7 +82,7 @@ const Posts = ({isAuth}) => {
           <></>
         }
         <div className="postFooter">
-          <h3 className="author">@{post.author.name}</h3>
+          <h4 className="author">@{post.author.name}</h4>
           <p>{convertToDate(post.timeStamp)}</p>
         </div>
       </div>
