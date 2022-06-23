@@ -25,10 +25,14 @@
  - ✅ Heading font size too big- reduce it 
  - gap between two comments should increase
  - ✅ allow a user to add more than one comment without refreshing the page
- - allow submition of comment using enter key
+ - ✅ allow submition of comment using enter key:desktop
  - check make the comment section more attractive
  - Graceful deletion of a post - deleting all the associated comments - tradeoff between complicating the frontend and leaving junk in database
+ - simple comment deletion - just remove reference from parent's child list
+ - Make the website more attractive
+ - caching posts and comments
  - Secure Database
+ - Load More is hidden in mobile view: atleast in my phone
  - improve the create post interface - more intuitive and with restricted access
  - caching the posts and pages so that we don't need to load everytime from database
  - Likes
@@ -44,6 +48,10 @@
  - automation of creation of links for photos
  - automation of creation of links for videos
  - inter website chat system
+ - media uploader: desktop
+ - media uploader: mobile
+ - gap between media and text in posts
+ - where are empty comments comming from
 
  Logic - Signin >> Multimedia posting >> incremental datafetch
  Login failing in github and heroku because their redirect uri are not registered with Google

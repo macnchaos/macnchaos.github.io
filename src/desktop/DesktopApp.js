@@ -34,7 +34,7 @@ function DesktopApp() {
   return (
     <Router>
       <DesktopNavbar isAuth={isAuth} setIsAuth={setIsAuth} />
-      <p class="link">Mayank Chaturvedi</p>
+      <p className="link">Mayank Chaturvedi</p>
       <Routes>
         <Route path = "/" element={<Home isAuth={isAuth}/>} />
         <Route path = "/createpost" element={<CreatePost isAuth={isAuth}/>} />
