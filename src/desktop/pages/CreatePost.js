@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {addDoc, collection, doc, setDoc, Timestamp} from "firebase/firestore";
 import { auth, db } from '../../firebase-config.js';
 import { useNavigate } from 'react-router-dom';
@@ -7,8 +7,9 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 const CreatePost = ({ isAuth }) => {
   const [title, setTitle] = useState("");
   const [postText, setPostText] = useState("");
-  const [postFile, setPostFile] = useState("");
   const [postType, setPostType] = useState("Tweet");
+  const hiddenFileInput = useRef(null);
+  const postFile = useRef(null);
 
   var postLink = "";
   let navigate = useNavigate();
@@ -18,10 +19,10 @@ const CreatePost = ({ isAuth }) => {
     const generateLink = async ()=>{
       const storage = getStorage();
       const fileName = (Math.random() + 1).toString(36).substring(2)
-      var extension = postFile.type
+      var extension = postFile.current.type
       extension = extension.replace(/(.*)\//g, '')
       const storageRef = ref(storage, 'PublicMedia/'+fileName+"."+extension);
-      await uploadBytes(storageRef, postFile);
+      await uploadBytes(storageRef, postFile.current);
       await getDownloadURL(storageRef).then((url)=>{
         postLink = url;
       })
@@ -41,8 +42,8 @@ const CreatePost = ({ isAuth }) => {
       await generateLink();
       content["url"]=postLink;
     }
-    console.log(content)
     const ctime = Timestamp.now()
+    console.log(content);
     const docRef = await addDoc(articleCollectionRef, {
       title,
       postType: convPostType,
@@ -53,6 +54,7 @@ const CreatePost = ({ isAuth }) => {
       content,
       timeStamp:ctime
     });
+
     await setDoc(
       doc(db,"comments",docRef.id),
       {
@@ -78,8 +80,11 @@ const CreatePost = ({ isAuth }) => {
       }
     }
   );
-  function handleUpload(event){
-    setPostFile(event.target.files[0]);
+  function handleUploadButtonClick(event){
+    hiddenFileInput.current.click();
+  }
+  function handleFileInputChange(event){
+    postFile.current = event.target.files[0];
   }
   return (
     <div className = "createPostPage">
@@ -119,9 +124,17 @@ const CreatePost = ({ isAuth }) => {
         </div> 
         {
           (postType==="Video" || postType==="Picture")&&(
-          <div id="upload-box" onChange={handleUpload}>
-            <input type="file"/>
-          </div>)
+            <>
+              <button onClick={handleUploadButtonClick} className="UploadMediaButton">
+                Upload a file
+              </button>
+              <input type="file"
+                    ref={hiddenFileInput}
+                    onChange={handleFileInputChange}
+                    style={{display:'none'}} 
+              /> 
+            </>
+          )
         }
         <button onClick={createPost}>Submit Post</button>
       </div>

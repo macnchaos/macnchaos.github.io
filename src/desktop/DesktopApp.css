@@ -375,3 +375,17 @@ textarea {
   color: rgba(255, 255, 255, 0.6);
   background-color: rgba(255, 255, 255, 0.2);
 }
+
+
+.cpContainer .upload-box {
+  margin-top: 20px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  background-color: grey;
+}
+
+.upload-box input {
+  cursor: pointer;
+}
