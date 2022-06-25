@@ -2,30 +2,59 @@ import React, { useEffect, useRef, useState } from 'react';
 import {addDoc, collection, doc, setDoc, Timestamp} from "firebase/firestore";
 import { auth, db } from '../../firebase-config.js';
 import { useNavigate } from 'react-router-dom';
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+
 
 const CreatePost = ({ isAuth }) => {
   const [title, setTitle] = useState("");
   const [postText, setPostText] = useState("");
   const [postType, setPostType] = useState("Tweet");
+  const [uploadProgress, setUploadProgress] = useState(-1);
   const hiddenFileInput = useRef(null);
-  const postFile = useRef(null);
+  const postFile = useRef("");
 
   var postLink = "";
   let navigate = useNavigate();
   
   const articleCollectionRef = collection(db,"posts");
   const createPost = async () => { //add rule in firebase table to allow only admins to write
-    const generateLink = async ()=>{
+    
+    const generateLink = async (attribute,convPostType,content)=>{
       const storage = getStorage();
       const fileName = (Math.random() + 1).toString(36).substring(2)
       var extension = postFile.current.type
       extension = extension.replace(/(.*)\//g, '')
       const storageRef = ref(storage, 'PublicMedia/'+fileName+"."+extension);
-      await uploadBytes(storageRef, postFile.current);
-      await getDownloadURL(storageRef).then((url)=>{
-        postLink = url;
-      })
+      
+      
+      const uploadTask = uploadBytesResumable(storageRef, postFile.current);
+
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setUploadProgress(progress);
+          switch (snapshot.state) {
+            case 'paused':
+              console.log('Upload is paused');
+              break;
+            case 'running':
+              console.log('Upload is running');
+              break;
+          }
+        }, 
+        (error) => {
+          console.log("inside errro")
+        }, 
+        () => {
+          // Upload completed successfully, now we can get the download URL
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            postLink=downloadURL
+            console.log(postLink)
+            content[attribute]=postLink;
+            updatePostInDatabase(convPostType,content)
+          });
+        }
+      );
     }
 
     var content = {
@@ -35,15 +64,17 @@ const CreatePost = ({ isAuth }) => {
                         postType==="Picture"?"macImage":
                         "macVideo";
     if(convPostType==="macImage"){
-      await generateLink();
-      content["image"]=postLink;
+      await generateLink("image",convPostType,content);
     }
     else if(convPostType==="macVideo"){
-      await generateLink();
-      content["url"]=postLink;
+      await generateLink("url",convPostType,content);
     }
+    else if(convPostType==="macTweet"){
+      updatePostInDatabase(convPostType,content);
+    }
+  }
+  const updatePostInDatabase = async (convPostType,content)=>{
     const ctime = Timestamp.now()
-    console.log(content);
     const docRef = await addDoc(articleCollectionRef, {
       title,
       postType: convPostType,
@@ -72,7 +103,6 @@ const CreatePost = ({ isAuth }) => {
     );
     navigate("/blog");
   }
-
   useEffect( //can also authenticate post creator here
     ()=>{
       if(!isAuth){
@@ -85,6 +115,9 @@ const CreatePost = ({ isAuth }) => {
   }
   function handleFileInputChange(event){
     postFile.current = event.target.files[0];
+    if(postFile.current.size>0){
+      setUploadProgress(0);
+    }
   }
   return (
     <div className = "createPostPage">
@@ -123,10 +156,10 @@ const CreatePost = ({ isAuth }) => {
           }/>
         </div> 
         {
-          (postType==="Video" || postType==="Picture")&&(
+          (postType==="Video" || postType==="Picture")&&uploadProgress===-1&&(
             <>
               <button onClick={handleUploadButtonClick} className="UploadMediaButton">
-                Upload a file
+                Upload A File
               </button>
               <input type="file"
                     ref={hiddenFileInput}
@@ -134,6 +167,20 @@ const CreatePost = ({ isAuth }) => {
                     style={{display:'none'}} 
               /> 
             </>
+          )
+        }
+        {
+          uploadProgress>0 && (
+            <div className='inputGp'>
+              <label>{Math.floor(uploadProgress)}%</label>
+            </div>
+          )
+        }
+        {
+          uploadProgress===0 && (
+            <div className='inputGp'>
+              <label>Ready to upload</label>
+            </div>
           )
         }
         <button onClick={createPost}>Submit Post</button>
