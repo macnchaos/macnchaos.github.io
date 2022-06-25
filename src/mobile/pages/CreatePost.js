@@ -1,31 +1,96 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {addDoc, collection, doc, setDoc, Timestamp} from "firebase/firestore";
 import { auth, db } from '../../firebase-config.js';
 import { useNavigate } from 'react-router-dom';
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+
 
 const CreatePost = ({ isAuth }) => {
   const [title, setTitle] = useState("");
   const [postText, setPostText] = useState("");
-  const [postLink, setPostLink] = useState("");
-  const [postType, setPostType] = useState("");
+  const [postType, setPostType] = useState("Tweet");
+  const [uploadProgress, setUploadProgress] = useState(-1);
+  const hiddenFileInput = useRef(null);
+  const postFile = useRef("");
 
+  var postLink = "";
   let navigate = useNavigate();
   
   const articleCollectionRef = collection(db,"posts");
   const createPost = async () => { //add rule in firebase table to allow only admins to write
+    
+    const generateLink = async (attribute,convPostType,content)=>{
+      const storage = getStorage();
+      const fileName = (Math.random() + 1).toString(36).substring(2)
+      var extension = postFile.current.type
+      extension = extension.replace(/(.*)\//g, '')
+      const storageRef = ref(storage, 'PublicMedia/'+fileName+"."+extension);
+      
+      
+      const uploadTask = uploadBytesResumable(storageRef, postFile.current);
+
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setUploadProgress(progress);
+          switch (snapshot.state) {
+            case 'paused':
+              console.log('Upload is paused');
+              break;
+            case 'running':
+              console.log('Upload is running');
+              break;
+            default:
+              console.log("inside default")
+          }
+        }, 
+        (error) => {
+          console.log("inside errro")
+        }, 
+        () => {
+          // Upload completed successfully, now we can get the download URL
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            postLink=downloadURL
+            content[attribute]=postLink;
+            updatePostInDatabase(convPostType,content)
+          });
+        }
+      );
+    }
+
     var content = {
       postText
     }
-    if(postType==="macImage"){
-      content["image"]=postLink;
+    var convPostType = postType==="Tweet"?"macTweet":
+                        postType==="Picture"?"macImage":
+                        "macVideo";
+    if(convPostType==="macImage"){
+      if(postLink===""){
+        await generateLink("image",convPostType,content);
+      }
+      else{
+        content["image"]=postLink
+        updatePostInDatabase(convPostType,content);
+      }
     }
-    else if(postType==="macVideo"){
-      content["url"]=postLink;
+    else if(convPostType==="macVideo"){
+      if(postLink===""){
+        await generateLink("url",convPostType,content);
+      }
+      else{
+        content["url"]=postLink
+        updatePostInDatabase(convPostType,content);
+      }
     }
+    else if(convPostType==="macTweet"){
+      updatePostInDatabase(convPostType,content);
+    }
+  }
+  const updatePostInDatabase = async (convPostType,content)=>{
     const ctime = Timestamp.now()
     const docRef = await addDoc(articleCollectionRef, {
       title,
-      postType,
+      postType: convPostType,
       author: {
         name:auth.currentUser.displayName,
         id:auth.currentUser.uid
@@ -33,6 +98,7 @@ const CreatePost = ({ isAuth }) => {
       content,
       timeStamp:ctime
     });
+
     await setDoc(
       doc(db,"comments",docRef.id),
       {
@@ -50,31 +116,45 @@ const CreatePost = ({ isAuth }) => {
     );
     navigate("/blog");
   }
-
   useEffect( //can also authenticate post creator here
     ()=>{
-      if(isAuth===false){
+      if(!isAuth){
         navigate("/login");
       }
-    }//,[isAuth] <--- Should this be here?
+    }
   );
+  function handleUploadButtonClick(event){
+    hiddenFileInput.current.click();
+  }
+  function handleFileInputChange(event){
+    postFile.current = event.target.files[0];
+    if(postFile.current.size>0){
+      setUploadProgress(0);
+    }
+  }
   return (
     <div className = "mobile-createPostPage">
       <div className = "mobile-cpContainer">
-        <h1>Create a post</h1>
+      <div className="postOptionSelect">
+          <h1>Post a </h1>
+          <select
+            value={postType}
+            onChange={
+              (e)=>{
+                setPostType(e.target.value)
+              }
+            } 
+          >
+            <option>Tweet</option>
+            <option>Picture</option>
+            <option>Video</option>
+          </select>
+        </div>
         <div className='mobile-inputGp'>
           <label>Title : </label>  
           <input placeholder = "Title..." onChange={
             (event)=>{
               setTitle(event.target.value)
-            }
-          }/>
-        </div>
-        <div className='mobile-inputGp'>
-          <label>Post Type : </label>  
-          <input placeholder = "macTweet/macImage/macVideo..." onChange={
-            (event)=>{
-              setPostType(event.target.value)
             }
           }/>
         </div>
@@ -87,16 +167,43 @@ const CreatePost = ({ isAuth }) => {
           }/>
         </div> 
         {
-          (postType==="macVideo" || postType==="macImage")?
-          <div className='mobile-inputGp'>
+          (postType==="Video" || postType==="Picture")&&
+          (<div className='mobile-inputGp'>
             <label>Content URL: </label>  
-            <input placeholder = "https://..." onChange={
+            <input placeholder = "optional: https://..." onChange={
             (event)=>{
-              setPostLink(event.target.value)
+              postLink = event.target.value
             }
           }/>
-          </div>:
-          <></>
+          </div>)
+        }
+        {
+          (postType==="Video" || postType==="Picture")&&uploadProgress===-1&&(
+            <>
+              <button onClick={handleUploadButtonClick} className="mobile-UploadMediaButton">
+                Upload A File
+              </button>
+              <input type="file"
+                    ref={hiddenFileInput}
+                    onChange={handleFileInputChange}
+                    style={{display:'none'}} 
+              /> 
+            </>
+          )
+        }
+        {
+          uploadProgress>0 && (
+            <div className='mobile-inputGp'>
+              <label>{Math.floor(uploadProgress)}%</label>
+            </div>
+          )
+        }
+        {
+          uploadProgress===0 && (
+            <div className='mobile-inputGp'>
+              <label>Ready to upload</label>
+            </div>
+          )
         }
         <button onClick={createPost}>Submit Post</button>
       </div>

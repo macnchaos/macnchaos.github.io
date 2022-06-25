@@ -40,6 +40,8 @@ const CreatePost = ({ isAuth }) => {
             case 'running':
               console.log('Upload is running');
               break;
+            default:
+              console.log("inside default")
           }
         }, 
         (error) => {
