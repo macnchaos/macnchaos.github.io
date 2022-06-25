@@ -49,7 +49,6 @@ const CreatePost = ({ isAuth }) => {
           // Upload completed successfully, now we can get the download URL
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             postLink=downloadURL
-            console.log(postLink)
             content[attribute]=postLink;
             updatePostInDatabase(convPostType,content)
           });
@@ -64,10 +63,22 @@ const CreatePost = ({ isAuth }) => {
                         postType==="Picture"?"macImage":
                         "macVideo";
     if(convPostType==="macImage"){
-      await generateLink("image",convPostType,content);
+      if(postLink===""){
+        await generateLink("image",convPostType,content);
+      }
+      else{
+        content["image"]=postLink
+        updatePostInDatabase(convPostType,content);
+      }
     }
     else if(convPostType==="macVideo"){
-      await generateLink("url",convPostType,content);
+      if(postLink===""){
+        await generateLink("url",convPostType,content);
+      }
+      else{
+        content["url"]=postLink
+        updatePostInDatabase(convPostType,content);
+      }
     }
     else if(convPostType==="macTweet"){
       updatePostInDatabase(convPostType,content);
@@ -155,6 +166,17 @@ const CreatePost = ({ isAuth }) => {
             }
           }/>
         </div> 
+        {
+          (postType==="Video" || postType==="Picture")&&
+          (<div className='inputGp'>
+            <label>Content URL: </label>  
+            <input placeholder = "optional: https://..." onChange={
+            (event)=>{
+              postLink = event.target.value
+            }
+          }/>
+          </div>)
+        }
         {
           (postType==="Video" || postType==="Picture")&&uploadProgress===-1&&(
             <>
