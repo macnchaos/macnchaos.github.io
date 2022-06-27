@@ -54,7 +54,7 @@
  - ✅ where are empty comments comming from:  they are original post references in comment
  - show the current page status by highlighting in navigation menu <--
  - ✅ loading indicator<-- 
- - allow deletion of post from mobile! <-- usefull
+ - ✅ allow deletion of post from mobile! <-- usefull
  - ✅ Navigation menu overlaps in mobile! <--
 
  Logic - Signin >> Multimedia posting >> incremental datafetch
