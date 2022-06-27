@@ -389,3 +389,27 @@ textarea {
 .upload-box input {
   cursor: pointer;
 }
+
+.LoadingContainer{
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  background-color:transparent;
+}
+.LoadingContainer .LoadingText{
+  font-family: "Vibur", cursive;
+  font-size: 1rem;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-size: 2rem;
+  text-align: center;
+  line-height: 1;
+  color: #c6e2ff;
+  animation: neon 0.08s ease-in-out infinite alternate;
+}
+.LoadingContainer .LoadingImage{
+  border-radius: 20px;
+  height:20%;
+}
