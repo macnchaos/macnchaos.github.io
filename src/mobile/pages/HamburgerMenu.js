@@ -1,6 +1,6 @@
 import { signOut } from "firebase/auth";
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../../firebase-config";
 const COLORS = {
@@ -117,6 +117,7 @@ const ItemLink = styled(NavLink)`
 `;
 function HamburgerMenu({isAuth,setIsAuth}) {
   const [click, setClick] = useState(false);
+  const currentLocation = useRef("");
   const handleClick = () => setClick(!click);
   const signUserOut = ()=>{
     signOut(auth).then(()=>{
@@ -125,6 +126,12 @@ function HamburgerMenu({isAuth,setIsAuth}) {
       window.location.pathname = "/login"
     })
   }
+  const location = useLocation();
+  useEffect(() => {
+    currentLocation.current=location.pathname;
+    console.log(currentLocation.current);
+  }, [location.pathname])
+  
   return (
     <>
       <MenuLabel htmlFor="navi-toggle" onClick={handleClick}>
@@ -136,24 +143,36 @@ function HamburgerMenu({isAuth,setIsAuth}) {
         <List>
           <li>
             <ItemLink onClick={handleClick} to="/">
-              Home
+              {
+                currentLocation.current==="/"?(<u>&#9658;Home</u>):
+                "Home"
+              }
             </ItemLink>
           </li>
           <li>
             <ItemLink onClick={handleClick} to="/blog">
-              Blog
+              {
+                currentLocation.current==="/blog"?(<u>&#9658;Blog</u>):
+                "Blog"
+              }
             </ItemLink>
           </li>
           {
             isAuth===false ? <li>
               <ItemLink onClick={handleClick} to="/login">
-                Login
+                {
+                  currentLocation.current==="/login"?(<u>&#9658;Login</u>):
+                  "Login"
+                }
               </ItemLink>
             </li> : 
             <>
               <li>
                 <ItemLink onClick={handleClick} to="/createPost">
-                  Create
+                    {
+                      currentLocation.current==="/createPost"?(<u>&#9658;Create</u>):
+                      "Create"
+                    }
                 </ItemLink>
               </li>
               
