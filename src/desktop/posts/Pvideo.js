@@ -5,6 +5,12 @@ function Pvideo({content}){
             <div className="player-wrapper">
                 <ReactPlayer className="postVideoContainer" url={content.url} width="100%" height="100%" controls={true}/>
             </div>
+            {content.postText!==""&&(
+                    <>
+                    <br></br>
+                    <br></br>
+                    </>
+                )}
             <div className="postTextContainer">{content.postText}</div>
         </>
     )

@@ -6,6 +6,9 @@ function Pvideo({content}){
                 <ReactPlayer className="mobilePostVideoContainer" url={content.url} width="100%" height="100%" controls={true}/>
                 
             </div>
+            {content.postText!==""&&(
+                    <br></br>
+                )}
             <div className="mobilePostTextContainer">{content.postText}</div>
         </div>
     )

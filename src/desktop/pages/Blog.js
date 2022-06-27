@@ -80,6 +80,7 @@ const Blog = () => {
                   </button>
                 </div>
               </div>
+              
             {
               post.postType === "macTweet" ?
                 <Tweet content = {post.content}/>:
