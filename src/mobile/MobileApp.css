@@ -297,3 +297,21 @@ textarea {
   align-items: flex-end;
   font-size:15px;
 }
+
+.mobile-NavigationSpace{
+  height: 100vgh;
+  background-color: transparent;
+}
+.mobile-BlogHeading {
+  font-family: "Vibur", cursive;
+  font-size: 2rem;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  text-align: center;
+  line-height: 1;
+  top: 10px;
+  left: 10px;
+  color: #c6e2ff;
+  animation: neon 0.08s ease-in-out infinite alternate;
+}

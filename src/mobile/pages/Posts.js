@@ -43,6 +43,7 @@ const Posts = ({isAuth}) => {
   },[params,commentId,post]);
   return (
     <div className="mobileHomePage">
+      <p className="mobile-BlogHeading">Forum</p>
       <div className="mobilePost">
         <div className="mobilePostHeader">
           <div className="title">

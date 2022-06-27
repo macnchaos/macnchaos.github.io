@@ -134,8 +134,10 @@ const CreatePost = ({ isAuth }) => {
   }
   return (
     <div className = "mobile-createPostPage">
+
       <div className = "mobile-cpContainer">
-      <div className="postOptionSelect">
+        <p className="mobile-BlogHeading">Artistic Hats</p>
+        <div className="postOptionSelect">
           <h1>Post a </h1>
           <select
             value={postType}

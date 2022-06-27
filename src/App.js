@@ -9,12 +9,12 @@ function App() {
     query: "(min-device-width: 850px)",
   });
   return (
-    // <div className="desktop-parent">
-    //   {<MobileApp/>}
-    // </div>
     <div className="desktop-parent">
-      {isDesktop?<DesktopApp/>:<MobileApp/>}
+      {<MobileApp/>}
     </div>
+    // <div className="desktop-parent">
+    //   {isDesktop?<DesktopApp/>:<MobileApp/>}
+    // </div>
   );
 }
 

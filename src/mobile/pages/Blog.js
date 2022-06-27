@@ -4,6 +4,7 @@ import { db } from '../../firebase-config.js';
 import Tweet from "../posts/Tweet.js";
 import Pimage from "../posts/Pimage.js"
 import Pvideo from "../posts/Pvideo.js";
+import Loading from "../images/Loading.gif";
 const Blog = () => {
     
     const loadLimit = 5;
@@ -56,7 +57,13 @@ const Blog = () => {
     }
   
     return (
+      postList.length===0 ?
+      <div className="LoadingContainer">
+        <p className="LoadingText">Loading Blog....</p>
+        <img className="LoadingImage" src={Loading} alt="loading"></img>
+      </div>:
       <div className="mobileHomePage">
+        <p className="mobile-BlogHeading">Snippets</p>
         {postList.map((post) => {
           return (
             <div className="mobilePost">  
